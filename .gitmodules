@@ -1,0 +1,3 @@
+[submodule "include/np1sec"]
+	path = include/np1sec
+	url = https://github.com/equalitie/np1sec.git
