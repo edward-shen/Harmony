@@ -1,0 +1,117 @@
+Spread IPv6 Readme
+------------------
+
+Spread version 5 adds support for IPv6.
+
+Spread version 5 adds support for IPv6 in the Spread daemon, C
+language client library and several example and support programs
+(e.g. - spmonitor, spuser, spsend, sprecv, spflooder).  This version
+of Spread supports Posix environments (e.g. - Linux) and Windows.
+
+Spread 5 can work on IPv4-only hosts, IPv6-only hosts or dual stack
+hosts.  However, all daemons in a Spread deployment must run using
+only IPv4 or IPv6 addresses.  Spread 5 does not yet support
+configurations where some daemons use IPv4 addresses while others use
+IPv6 addresses, even if transition mechanisms such as network address
+translation (e.g. - stateless IP/ICMP translation) would allow such
+hosts to communicate using those addresses.
+
+Daemons' IP addresses can be configured explicitly or by using names
+which will be looked up using standard system services (i.e. - DNS,
+/etc/hosts, etc.) in order to map them back to IP addresses.  Clients
+can similarly specify either explicit addresses or names to connect to
+daemons.
+
+Current Status:
+---------------
+
+IPv6 addressing is fully supported and functional.  Automatic
+translation between IPv4 and IPv6 addresses for daemon communication
+is not yet supported.
+
+Building Spread:
+----------------
+
+The build process for Spread and supporting libraries has not changed.
+It is built with the standard process:
+
+./configure
+make 
+make install
+
+Spread Configuration:
+---------------------
+
+Spread 5's configuration file is largely backwards compatible, meaning
+if you are upgrading from Spread 4 to 5, then your previous
+configuration files are highly likely to still work as expected.
+
+To use the new IPv6 enabled version of Spread on an IPv6 network you
+need to make the following changes to your spread.conf:
+
+1) In the Spread_Segment declarations you should use an IPv6 multicast
+address for the segment address, and if you provide specific IP
+addresses for each node, then provide the address as a IPv6
+address.
+
+Spread_Segment [ff02::5]:3333
+{
+     node1	2001:db8:1234::1
+     node2	2001:db8:1234::2
+     node3      2001:db8:1234::3
+}
+
+1a) For IPv6, each Spread daemon tries to determine appropriate
+interfaces to use from addresses by matching them against the local
+interfaces on the machine.  However, you can explicitly specify
+interfaces in your addresses if necessary or if you like.  Interface
+names as part of addresses in a configuration file are "local" to each
+daemon: they can be different on different daemons all running within
+the same configuration.  For a given daemon, the only interfaces that
+are actually used are the ones for that daemon (e.g. - its own daemon
+address and segment address).  A daemon will only use its own
+particular interfaces whenever it tries to communicate with other
+daemons.  This means that you can use the same configuration file for
+all of your daemons, but the interface portions of addresses will only
+be interpreted locally where appropriate.
+
+Spread_Segment [ff02::1:2:3:4:5%eth1]:5000
+{
+     node1 fe80::6a05:caff:fe01:7f7a%eth2
+     node2 fe80::be30:5bff:fee5:1d65%eth1
+     node3 fe80::be30:5bff:fee5:1d36%eth1
+}
+
+2) This version introduces the concept of virtual IDs for daemons,
+which are the low level, unique IDs that daemons use in their
+intercommunication.  Normally, Spread will generate a hash of the
+daemon's name (or address, if no name is given) as its virtual ID.
+However, in the unlikely event that two daemon's hashes collide or if
+an administrator wants to control these IDs explicitly, then they can
+use the VirtualID syntax below.  A VirtualID is a positive, decimal
+integer.  For maximum forwards compatability of a configuration,
+VirtualIDs should be positive integers less than 255.
+
+Spread_Segment [ff02::5]:3333
+{
+     node1	2001:db8:1234::1	VirtualID = 1
+     node2	2001:db8:1234::2	VirtualID = 2
+     node3	2001:db8:1234::3	VirtualID = 3
+}
+
+Spread API Changes:
+-------------------
+
+For clients to connect to a daemon over IPv6, just use an IPv6 address
+or hostname that resolves to a IPv6 address in the normal
+"spread_name" parameter to SP_connect() instead of using an IPv4
+address.
+
+Example/Test programs:
+----------------------
+
+In examples/ are the spuser and spflooder programs which have been
+updated to connect to Spread over IPv4 or IPv6.
+
+In daemon/ is the spmonitor program for checking the status of daemons
+and creating partitions.  It is updated to work with the IPv6 daemon.
