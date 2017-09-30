@@ -42,7 +42,8 @@ namespace harmony {
         RECV_CIPHERTEXT,
         /// event_data is std::string* of the username
         USER_LEFT,
-
+        // User left the conversation
+        CONV_LEAVE,
         // spread to UI
         SPREAD_ERROR
     };

@@ -1,38 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>LeaveConfirmation</class>
- <widget name="LeaveConfirmation" class="QDialog">
+ <widget class="QDialog" name="LeaveConfirmation">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>328</width>
+    <height>149</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget name="buttonBox" class="QDialogButtonBox">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>240</y>
-     <width>341</width>
-     <height>32</height>
+     <x>10</x>
+     <y>40</y>
+     <width>301</width>
+     <height>60</height>
     </rect>
    </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="WarningLabel">
+      <property name="text">
+       <string>Are you sure you wish to leave this conversation?</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QDialogButtonBox" name="buttonBox">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="standardButtons">
+       <set>QDialogButtonBox::No|QDialogButtonBox::Yes</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
+  <zorder>buttonBox</zorder>
+  <zorder>WarningLabel</zorder>
+  <zorder>WarningLabel</zorder>
+  <zorder>WarningLabel</zorder>
+  <zorder>WarningLabel</zorder>
  </widget>
- <pixmapfunction/>
  <resources/>
  <connections>
   <connection>

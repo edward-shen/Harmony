@@ -135,6 +135,10 @@ namespace harmony {
                 delete data;
                 break;
             }
+            case EventType::CONV_LEAVE: {
+                delete data;
+                break;
+            }
             case EventType::SPREAD_ERROR:
 
                 break;

@@ -12,3 +12,13 @@ LeaveConfirmation::~LeaveConfirmation()
 {
     delete ui;
 }
+
+void LeaveConfirmation::on_buttonBox_accepted()
+{
+
+}
+
+void LeaveConfirmation::on_buttonBox_rejected()
+{
+    this->close();
+}
