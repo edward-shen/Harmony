@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "../event.h"
-
+#include "conversationinviteaccept.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -47,8 +47,13 @@ void MainWindow::post_message()
     QString text = ui->MessageInput->text();
     std::string* heap_text = new std::string(text.toUtf8().constData());
 
-    ui->MessageHistory->append(QString(username += text));
+    ui->MessageHistory->append(QString::fromStdString(username + ": ") + text);
     ui->MessageInput->clear();
 
     harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::SEND_PLAINTEXT, heap_text));
+}
+
+MainWindow::recieve_conversation_invite()
+{
+
 }

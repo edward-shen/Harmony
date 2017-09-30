@@ -16,6 +16,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    recieve_conversation_invite();
 
 private slots:
     void on_EnterButton_pressed();
@@ -24,7 +25,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     void post_message();
-    std::string username = "";
+    std::string username = "test";
 };
 
 #endif // MAINWINDOW_H
