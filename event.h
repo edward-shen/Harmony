@@ -19,6 +19,12 @@ namespace harmony {
         RECV_PLAINTEXT,
         NP1SEC_ERROR,
 
+        // np1sec to spread
+        SEND_CIPHERTEXT,
+
+        // spread to np1sec
+        RECV_CIPHERTEXT,
+
         // spread to UI
         SPREAD_ERROR
     };
