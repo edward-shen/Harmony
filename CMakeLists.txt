@@ -1,0 +1,21 @@
+cmake_minimum_required(VERSION 2.8)
+project(Harmony)
+add_executable(harmony main.cpp)
+include_directories(${CMAKE_SOURCE_DIR}/include/np1sec/src ${CMAKE_SOURCE_DIR}/include/spread-src-4.4.0/include)
+set(SOURCES main.cpp ${CMAKE_SOURCE_DIR}/include/np1sec/src/*)
+
+if (WIN32)
+add_library(spread STATIC IMPORTED)
+set_property(TARGET spread PROPERTY IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/lib/libspread.lib)
+add_library(spread-core STATIC IMPORTED)
+set_property(TARGET spread-core PROPERTY IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/lib/libspread-core.lib)
+target_link_libraries(harmony spread-core spread)
+endif (WIN32)
+
+if (UNIX)
+add_library(spread STATIC IMPORTED)
+add_library(spread-core STATIC IMPORTED)
+target_link_libraries(harmony spread-core spread)
+endif (UNIX)
+
+install(TARGETS harmony DESTINATION bin)
