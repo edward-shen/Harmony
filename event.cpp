@@ -69,7 +69,7 @@ namespace harmony {
                 break;
             }
             case EventType::INIT_CONN:
-                harmony::spread_init();
+                //harmony::spread_init();
                 break;
             case EventType::INIT_NP1SEC: {
                 std::string* data = (std::string*) evt->event_data;

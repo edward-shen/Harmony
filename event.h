@@ -50,7 +50,6 @@ namespace harmony {
     public:
         EventType type;
         void* event_data;
-
         Event(EventType type, void* event_data) : type(type), event_data(event_data) {}
     };
 

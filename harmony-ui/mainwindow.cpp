@@ -1,5 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "../event.h"
+
+#include <memory>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -36,13 +39,17 @@ void MainWindow::on_MessageInput_returnPressed()
     }
 }
 
-
 /**
  * @brief MainWindow::post_message appends the history log with the text stored
  * in the MessageInput buffer. It then clears the buffer.
  */
 void MainWindow::post_message()
 {
-    ui->MessageHistory->append(ui->MessageInput->text());
+    QString text = ui->MessageInput->text();
+    ui->MessageHistory->append(text);
     ui->MessageInput->clear();
+
+    std::string* heap_text = new std::string(text.toUtf8().constData());
+
+    harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::SEND_PLAINTEXT, heap_text));
 }
