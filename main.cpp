@@ -1,5 +1,3 @@
-#include "main.h"
-
 #include <iostream>
 #include <memory>
 #include <string>
@@ -9,10 +7,19 @@
 #include "encrypt.h"
 #include "event.h"
 #include "spread.h"
-
 #include "qt_main.h"
 
 #pragma comment(lib, "Ws2_32.lib")
+
+/**
+ * @brief closeThreads Closes all active threads for graceful shutdown
+ * @param har_evt Main Event handler
+ */
+void closeThreads() {
+    harmony::event_interrupt();
+    harmony::conv::close_comm();
+    harmony::spread_exit();
+}
 
 int main(int argc, char *argv[]) {
     qt_init(argc, argv);
@@ -31,12 +38,3 @@ int main(int argc, char *argv[]) {
     return res;
 }
 
-/**
- * @brief closeThreads Closes all active threads for graceful shutdown
- * @param har_evt Main Event handler
- */
-void closeThreads() {
-    harmony::event_interrupt();
-    harmony::conv::close_comm();
-    harmony::spread_exit();
-}

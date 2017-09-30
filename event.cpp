@@ -1,7 +1,6 @@
 #include "event.h"
 #include "spread.h"
 #include "encrypt.h"
-#include "main.h"
 #include "harmony-ui/mainwindow.h"
 #include "qt_main.h"
 
@@ -14,10 +13,7 @@ namespace harmony {
     template <class T>
     class SafeQueue {
     public:
-        SafeQueue(void)
-            : q()
-            , m()
-            , c() {}
+        SafeQueue(void) : q(), m(), c() {}
 
         ~SafeQueue(void) {}
 
