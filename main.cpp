@@ -14,26 +14,25 @@
 
 #pragma comment(lib, "Ws2_32.lib")
 
-void harmony_events_thread() {
-    harmony::event_process();
-}
-
 int main(int argc, char *argv[]) {
     qt_init(argc, argv);
 
     harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::INIT_CONN, nullptr));
-    std::thread har_evt(harmony_events_thread);
+    std::thread har_evt(&harmony::event_process);
 
     int res = qt_run();
 
-    std::cout << "interrupting events" << std::endl;
-    harmony::event_interrupt();
-    har_evt.join();
+    closeThreads();
 
-    std::cout << "closing comm" << std::endl;
-    harmony::conv::close_comm();
-    std::cout << "exiting spread" << std::endl;
-    harmony::spread_exit();
-    std::cout << "cleaned up" << std::endl;
     return res;
+}
+
+/**
+ * @brief closeThreads Closes all active threads for graceful shutdown
+ * @param har_evt Main Event handler
+ */
+void closeThreads() {
+    harmony::event_interrupt();
+    harmony::conv::close_comm();
+    harmony::spread_exit();
 }
