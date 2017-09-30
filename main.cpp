@@ -17,13 +17,17 @@
 int main(int argc, char *argv[]) {
     qt_init(argc, argv);
 
+    // Initializes our Spread toolkit client by passing an initialization event into the queue on start.
     harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::INIT_CONN, nullptr));
+
+    // Initializses the event loop thread
     std::thread har_evt(&harmony::event_process);
 
+    // Runs our UI thread.
     int res = qt_run();
 
+    // After our UI closes, close our stuff
     closeThreads();
-
     return res;
 }
 
