@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>719</width>
+    <width>708</width>
     <height>641</height>
    </rect>
   </property>
@@ -20,8 +20,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>459</x>
-      <y>10</y>
+      <x>460</x>
+      <y>0</y>
       <width>241</width>
       <height>571</height>
      </rect>
@@ -52,19 +52,19 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
+      <y>0</y>
       <width>441</width>
       <height>571</height>
      </rect>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>580</y>
+      <y>570</y>
       <width>691</width>
-      <height>86</height>
+      <height>41</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -80,14 +80,72 @@
      </item>
     </layout>
    </widget>
-   <zorder>MessageInput</zorder>
-   <zorder>EnterButton</zorder>
-   <zorder>MessageHistory</zorder>
-   <zorder>UserList</zorder>
-   <zorder>MessageInput</zorder>
+   <zorder>layoutWidget</zorder>
    <zorder>UserList</zorder>
    <zorder>MessageHistory</zorder>
   </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>708</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="action_Settings"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>Abo&amp;ut</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuConversation">
+    <property name="title">
+     <string>Co&amp;nversation</string>
+    </property>
+    <addaction name="actionCreate"/>
+    <addaction name="actionInvite"/>
+    <addaction name="actionLeave"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuConversation"/>
+   <addaction name="menuAbout"/>
+  </widget>
+  <action name="action_Settings">
+   <property name="text">
+    <string>&amp;Settings</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="toolTip">
+    <string>&amp;Quit</string>
+   </property>
+  </action>
+  <action name="actionCreate">
+   <property name="text">
+    <string>Create</string>
+   </property>
+  </action>
+  <action name="actionInvite">
+   <property name="text">
+    <string>Invite</string>
+   </property>
+  </action>
+  <action name="actionLeave">
+   <property name="text">
+    <string>Leave</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

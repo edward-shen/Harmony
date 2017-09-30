@@ -26,13 +26,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    ../event.cpp
+    ../event.cpp \
+    conversationinviteaccept.cpp
 
 HEADERS += \
         mainwindow.h \
-    ../event.h
+    ../event.h \
+    conversationinviteaccept.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    conversationinviteaccept.ui
 
 CONFIG += c++14
