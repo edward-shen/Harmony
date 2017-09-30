@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1634</width>
-    <height>1276</height>
+    <width>1577</width>
+    <height>1127</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,34 +20,15 @@
       <property name="enabled">
        <bool>true</bool>
       </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QTextBrowser" name="UserList">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <property name="minimumSize">
-       <size>
-        <width>200</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>400</width>
-        <height>16777215</height>
-       </size>
-      </property>
      </widget>
     </item>
-    <item row="1" column="0" colspan="2">
+    <item row="1" column="0" colspan="3">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QLineEdit" name="MessageInput"/>
@@ -61,17 +42,33 @@
       </item>
      </layout>
     </item>
+    <item row="0" column="1">
+     <widget class="QListWidget" name="UserList">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>400</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="sortingEnabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
    </layout>
-   <zorder>layoutWidget</zorder>
-   <zorder>UserList</zorder>
-   <zorder>MessageHistory</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1634</width>
+     <width>1577</width>
      <height>47</height>
     </rect>
    </property>
