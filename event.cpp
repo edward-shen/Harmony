@@ -73,6 +73,12 @@ namespace harmony {
             case EventType::NP1SEC_ERROR:
 
                 break;
+            case EventType::SEND_CIPHERTEXT:
+
+                break;
+            case EventType::RECV_CIPHERTEXT:
+
+                break;
             case EventType::SPREAD_ERROR:
 
                 break;

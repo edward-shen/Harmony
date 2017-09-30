@@ -3,3 +3,4 @@ build/*
 .vscode/*
 .directory
 build-harmony-ui-Desktop-Debug/*
+*.out
