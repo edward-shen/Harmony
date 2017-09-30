@@ -35,6 +35,7 @@ int main(int argc, char *argv[]) {
 
     // After our UI closes, close our stuff
     closeThreads();
+    har_evt.join();
     return res;
 }
 
