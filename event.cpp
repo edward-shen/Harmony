@@ -8,6 +8,8 @@
 #include <iostream>
 
 namespace harmony {
+    volatile bool stop_events = false;
+
     // https://stackoverflow.com/a/16075550
     template <class T>
     class SafeQueue {
@@ -33,13 +35,14 @@ namespace harmony {
             while (q.empty()) {
                 // release lock as long as the wait and reaquire it afterwards.
                 c.wait(lock);
+                if (stop_events) return std::unique_ptr<T>(nullptr);
             }
             std::unique_ptr<T> p2 = std::move(q.front());
             q.pop();
             return p2;
         }
 
-    private:
+    public:
         std::queue<std::unique_ptr<T>> q;
         mutable std::mutex m;
         std::condition_variable c;
@@ -49,6 +52,11 @@ namespace harmony {
 
     void event_queue(std::unique_ptr<Event> evt) {
         g_evt_queue.enqueue(std::move(evt));
+    }
+
+    void event_interrupt() {
+        stop_events = true;
+        g_evt_queue.c.notify_all();
     }
 
     void event_process() {
@@ -90,7 +98,7 @@ namespace harmony {
                 break;
             case EventType::PROMPT_INVITE: {
                 harmony::conv::invite_notification* inv = (harmony::conv::invite_notification*) evt->event_data;
-                temp_prompt_invite(*inv);
+                MainWindow::recieve_conversation_invite(inv);
                 delete inv;
                 break;
             }
@@ -134,7 +142,7 @@ namespace harmony {
                 break;
             }
             case EventType::CONV_LEAVE: {
-                delete data;
+                
                 break;
             }
             case EventType::SPREAD_ERROR:

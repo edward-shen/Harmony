@@ -3,22 +3,20 @@
 
 ConversationInviteAccept::ConversationInviteAccept(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ConversationInviteAccept)
-{
+    ui(new Ui::ConversationInviteAccept) {
     ui->setupUi(this);
+
+    accepted = false;
 }
 
-ConversationInviteAccept::~ConversationInviteAccept()
-{
+ConversationInviteAccept::~ConversationInviteAccept() {
     delete ui;
 }
 
-void ConversationInviteAccept::on_buttonBox_accepted()
-{
+void ConversationInviteAccept::on_buttonBox_accepted() {
 
 }
 
-void ConversationInviteAccept::on_buttonBox_rejected()
-{
+void ConversationInviteAccept::on_buttonBox_rejected() {
 
 }

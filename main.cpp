@@ -88,9 +88,7 @@ void temp_prompt_invite(harmony::conv::invite_notification inv) {
 }
 
 void harmony_events_thread() {
-    while (true) {
-        harmony::event_process();
-    }
+    harmony::event_process();
 }
 
 int main(int argc, char *argv[]) {
@@ -101,6 +99,14 @@ int main(int argc, char *argv[]) {
 
     int res = qt_run();
 
-    system("PAUSE");
+    std::cout << "interrupting events" << std::endl;
+    harmony::event_interrupt();
+    har_evt.join();
+
+    std::cout << "closing comm" << std::endl;
+    harmony::conv::close_comm();
+    std::cout << "exiting spread" << std::endl;
+    harmony::spread_exit();
+    std::cout << "cleaned up" << std::endl;
     return res;
 }

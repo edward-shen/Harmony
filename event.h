@@ -58,4 +58,5 @@ namespace harmony {
 
     void event_queue(std::unique_ptr<Event>);
     void event_process();
+    void event_interrupt();
 }

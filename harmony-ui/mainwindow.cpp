@@ -3,6 +3,8 @@
 #include "../event.h"
 #include "conversationinviteaccept.h"
 #include <qthread.h>
+#include <QMessageBox>
+#include <iostream>
 
 extern MainWindow* g_main_win;
 
@@ -16,7 +18,10 @@ MainWindow::MainWindow(QWidget *parent) :
     updater->moveToThread(thread);
     connect(updater, SIGNAL(_appendChatText(QString)), this, SLOT(appendChatText(QString)));
     connect(updater, SIGNAL(_setUsers(QStringList)), this, SLOT(setUsers(QStringList)));
+    connect(updater, SIGNAL(_promptInvite(QCustomData)), this, SLOT(promptInvite(QCustomData)));
     connect(thread, SIGNAL(destroyed()), updater, SLOT(deleteLater()));
+
+    CIAWindow = new ConversationInviteAccept();
 }
 
 MainWindow::~MainWindow() {
@@ -49,6 +54,14 @@ void MainWindow::setUsers(const QStringList& list) {
     ui->UserList->insertItems(0, list);
 }
 
+bool hasEnding(std::string const &fullString, std::string const &ending) {
+    if (fullString.length() >= ending.length()) {
+        return (0 == fullString.compare(fullString.length() - ending.length(), ending.length(), ending));
+    } else {
+        return false;
+    }
+}
+
 void MainWindow::post_message() {
     QString text = ui->MessageInput->text();
     if (text.trimmed() != "") {
@@ -77,30 +90,44 @@ void MainWindow::recieve_user_list(std::vector<std::string>* users) {
 }
 
 void MainWindow::recieve_conversation_invite(harmony::conv::invite_notification* inv) {
-    //CIAWindow = new ConversationInviteAccept(); // Be sure to destroy your window somewhere
-    //CIAWindow->show();
+    std::cout << "Pointer going in " << ((uintptr_t) inv) << std::endl;
+    harmony::conv::invite_notification* inv2 = new harmony::conv::invite_notification(*inv);
+    QCustomData data(inv2);
+    g_main_win->updater->promptInvite(data);
+}
+
+void MainWindow::promptInvite(const QCustomData& from) {
+    harmony::conv::invite_notification* inv = (harmony::conv::invite_notification*) from.ptr();
+    std::cout << "Pointer coming out " << ((uintptr_t) inv) << std::endl;
+
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, QString::fromStdString("Invite from " + inv->from), "Accept invite?",
+        QMessageBox::Yes | QMessageBox::No);
+    if (reply == QMessageBox::Yes) {
+        harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::JOIN_CONV, inv));
+    }
 }
 
 void MainWindow::on_actionQuit_triggered() {
     this->close();
 }
 
-void MainWindow::on_action_Settings_triggered()
-{
+void MainWindow::on_action_Settings_triggered() {
 
 }
 
-void MainWindow::on_actionCreate_triggered()
-{
+void MainWindow::on_actionCreate_triggered() {
 
 }
 
-void MainWindow::on_actionInvite_triggered()
-{
-
+void MainWindow::on_actionInvite_triggered() {
+    QListWidgetItem* itm = ui->UserList->currentItem();
+    std::string name(itm->text().toUtf8().constData());
+    if (hasEnding(name, " (YOU)")) return;
+    harmony::conv::invite_out* inv = new harmony::conv::invite_out(name, harmony::conv::default_conv());
+    harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::SEND_INVITE, inv));
 }
 
-void MainWindow::on_actionLeave_triggered()
-{
+void MainWindow::on_actionLeave_triggered() {
 
 }

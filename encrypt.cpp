@@ -60,11 +60,15 @@ namespace harmony {
             conv->conversation->join();
             std::string id = unique_id();
             conv->id = id;
+            _default_conv = id;
             conversations[id] = conv->conversation;
             event_queue(std::make_unique<Event>(EventType::CONV_JOINED, new std::string(id)));
         }
 
-        void close_comm() {}
+        void close_comm() {
+            if (room)
+                room->disconnect();
+        }
 
         void user_left(std::string username) {
             room->user_left(username);

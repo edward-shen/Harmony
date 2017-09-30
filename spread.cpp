@@ -9,6 +9,7 @@ static mailbox mbox;
 
 namespace harmony {
     std::thread recv;
+    volatile bool exited = false;
 
     void spread_init() {
         char priv_grp[MAX_GROUP_NAME];
@@ -39,6 +40,12 @@ namespace harmony {
         event_queue(std::make_unique<Event>(EventType::INIT_NP1SEC, heap_str));
     }
 
+    void spread_exit() {
+        exited = true;
+        SP_disconnect(mbox);
+        recv.join();
+    }
+
     void spread_send(std::string message) {
         int ret = SP_multicast(mbox, AGREED_MESS, "harmony", 0, message.size(), message.c_str());
         if (ret < 0) {
@@ -48,7 +55,7 @@ namespace harmony {
     }
 
     void spread_recv_thread() {
-        while (true) {
+        while (!exited) {
             harmony::spread_recv mess = harmony::spread_block_recv();
             if (mess.type == harmony::spread_recv::ERROR) {
                 std::unique_ptr<Event> evt = std::make_unique<Event>(EventType::SPREAD_ERROR, nullptr);

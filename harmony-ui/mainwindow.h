@@ -5,6 +5,8 @@
 #include <string>
 #include <memory>
 
+#include "qt_data.h"
+
 #include "../encrypt.h"
 #include "conversationinviteaccept.h"
 
@@ -23,10 +25,14 @@ public:
     void setUsers(const QStringList& list) {
         emit _setUsers(list);
     }
+    void promptInvite(const QCustomData& from) {
+        emit _promptInvite(from);
+    }
 
 signals:
     void _appendChatText(const QString&);
     void _setUsers(const QStringList&);
+    void _promptInvite(const QCustomData&);
 };
 
 class MainWindow : public QMainWindow
@@ -51,6 +57,7 @@ private slots:
 
     void appendChatText(const QString&);
     void setUsers(const QStringList&);
+    void promptInvite(const QCustomData&);
 private:
     void post_message();
     Ui::MainWindow *ui;

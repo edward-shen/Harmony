@@ -8,6 +8,7 @@
 
 namespace harmony {
     void spread_init();
+    void spread_exit();
 
     void spread_send(std::string message);
 
