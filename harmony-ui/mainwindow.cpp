@@ -60,8 +60,8 @@ void MainWindow::recieve_plaintext(harmony::conv::conv_message* msg) {
 }
 
 void MainWindow::recieve_conversation_invite(harmony::conv::invite_notification* inv) {
-    //CIAWindow = new CIAWindow(); // Be sure to destroy your window somewhere
-    //CIAWindow->show();
+    CIAWindow = new ConversationInviteAccept(); // Be sure to destroy your window somewhere
+    CIAWindow->show();
 }
 
 void MainWindow::on_actionQuit_triggered() {

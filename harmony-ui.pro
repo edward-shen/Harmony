@@ -28,16 +28,22 @@ SOURCES += \
         harmony-ui/mainwindow.cpp \
     event.cpp \
     harmony-ui/conversationinviteaccept.cpp \
-    main.cpp
+    main.cpp \
+    harmony-ui/sendinvite.cpp \
+    harmony-ui/leaveconfirmation.cpp
 
 HEADERS += \
         harmony-ui/mainwindow.h \
     event.h \
-    harmony-ui/conversationinviteaccept.h
+    harmony-ui/conversationinviteaccept.h \
+    harmony-ui/sendinvite.h \
+    harmony-ui/leaveconfirmation.h
 
 FORMS += \
         harmony-ui/mainwindow.ui \
-    harmony-ui/conversationinviteaccept.ui
+    harmony-ui/conversationinviteaccept.ui \
+    harmony-ui/sendinvite.ui \
+    harmony-ui/leaveconfirmation.ui
 
 CONFIG += c++14
 
