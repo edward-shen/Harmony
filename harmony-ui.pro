@@ -28,19 +28,17 @@ SOURCES += \
         harmony-ui/mainwindow.cpp \
     event.cpp \
     harmony-ui/conversationinviteaccept.cpp \
-    harmony-ui/createconveration.cpp \
     main.cpp
 
 HEADERS += \
         harmony-ui/mainwindow.h \
     event.h \
-    harmony-ui/conversationinviteaccept.h \
-    harmony-ui/createconveration.h
+    harmony-ui/conversationinviteaccept.h
 
 FORMS += \
         harmony-ui/mainwindow.ui \
     harmony-ui/conversationinviteaccept.ui \
-    harmony-ui/createconveration.ui
+    harmony-ui/createconveration_copy.ui
 
 CONFIG += c++14
 
