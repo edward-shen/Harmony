@@ -20,7 +20,7 @@ namespace harmony {
         int ret = SP_connect_timeout("3333@localhost", "harmony", 0, 1, &mbox, priv_grp, test_timeout);
         if (ret != ACCEPT_SESSION) {
             SP_error(ret);
-            throw std::exception("spread error");
+            throw std::runtime_error("spread error");
         }
 
         std::cerr << "Spread connected to 3333@localhost with self group: " << priv_grp << std::endl;
@@ -28,7 +28,7 @@ namespace harmony {
         ret = SP_join(mbox, "harmony");
         if (ret != 0) {
             SP_error(ret);
-            throw std::exception("spread error");
+            throw std::runtime_error("spread error");
         }
 
         std::cerr << "Joined group harmony" << std::endl;
@@ -43,7 +43,7 @@ namespace harmony {
         int ret = SP_multicast(mbox, AGREED_MESS, "harmony", 0, message.size(), message.c_str());
         if (ret < 0) {
             SP_error(ret);
-            throw std::exception("spread error");
+            throw std::runtime_error("spread error");
         }
     }
 
@@ -60,7 +60,7 @@ namespace harmony {
                 std::unique_ptr<Event> evt = std::make_unique<Event>(EventType::RECV_CIPHERTEXT, heap_sv);
                 event_queue(std::move(evt));
             } else {
-                throw std::exception("wtf");
+                throw std::runtime_error("wtf");
             }
         }
     }

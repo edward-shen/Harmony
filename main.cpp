@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <cctype>
+#include <thread>
 
 #include "encrypt.h"
 #include "event.h"
@@ -13,6 +14,7 @@
 
 #pragma comment(lib, "Ws2_32.lib")
 
+/*
 static harmony::conv::invite_notification* current_inv = nullptr;
 static std::string current_conv = "_none";
 
@@ -68,21 +70,21 @@ void temp_stdin_reader() {
         }
     }
 }
-
+*/
 void temp_display_plaintext(harmony::conv::conv_message msg) {
-    std::cout << "Got plaintext on " << msg.conv << " from " << msg.sender << ": " << msg.message << std::endl;
+    //std::cout << "Got plaintext on " << msg.conv << " from " << msg.sender << ": " << msg.message << std::endl;
 }
 
 void temp_notify_conv_joined(std::string conv) {
-    std::cout << "============ joined conversation: " << conv << std::endl;
+    /*std::cout << "============ joined conversation: " << conv << std::endl;
     if (current_conv == "_none") {
         current_conv = conv;
-    }
+    }*/
 }
 
 void temp_prompt_invite(harmony::conv::invite_notification inv) {
-    std::cout << "============ invited to conv by " << inv.from << ". Accept? ";
-    current_inv = new harmony::conv::invite_notification(inv);
+   // std::cout << "============ invited to conv by " << inv.from << ". Accept? ";
+    //current_inv = new harmony::conv::invite_notification(inv);
 }
 
 int main(int argc, char *argv[]) {
@@ -90,7 +92,7 @@ int main(int argc, char *argv[]) {
 
     harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::INIT_CONN, nullptr));
 
-    std::thread reader(temp_stdin_reader);
+    // std::thread reader(temp_stdin_reader);
 
     while (true) {
         harmony::event_process();

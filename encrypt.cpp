@@ -7,6 +7,7 @@
 #include "room.h"
 #include "encrypt.h"
 #include <json.hpp>
+#include <thread>
 using nlohmann::json;
 
 namespace harmony {

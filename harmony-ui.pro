@@ -24,7 +24,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        harmony-ui/qtmain.cpp \
+        harmony-ui/qt_main.cpp \
         harmony-ui/mainwindow.cpp \
     event.cpp \
     harmony-ui/conversationinviteaccept.cpp \
@@ -43,3 +43,6 @@ FORMS += \
     harmony-ui/createconveration.ui
 
 CONFIG += c++14
+
+DISTFILES += \
+    CMakeLists.txt
