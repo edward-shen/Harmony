@@ -2,6 +2,7 @@ def fib(n):
     """Print the Fibonacci series up to n."""
 
     cdef int test = 3
+    cdef int test2 = 2
     a, b = 0, 1
     while b < n:
         print(test)

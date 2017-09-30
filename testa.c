@@ -931,6 +931,7 @@ static const char __pyx_k_file[] = "file";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_test[] = "test";
 static const char __pyx_k_print[] = "print";
+static const char __pyx_k_test2[] = "test2";
 static const char __pyx_k_testa[] = "testa";
 static const char __pyx_k_test_2[] = "__test__";
 static const char __pyx_k_testa_pyx[] = "testa.pyx";
@@ -945,6 +946,7 @@ static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_n;
 static PyObject *__pyx_n_s_print;
 static PyObject *__pyx_n_s_test;
+static PyObject *__pyx_n_s_test2;
 static PyObject *__pyx_n_s_test_2;
 static PyObject *__pyx_n_s_testa;
 static PyObject *__pyx_kp_s_testa_pyx;
@@ -977,6 +979,7 @@ static PyObject *__pyx_pw_5testa_1fib(PyObject *__pyx_self, PyObject *__pyx_v_n)
 
 static PyObject *__pyx_pf_5testa_fib(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_n) {
   int __pyx_v_test;
+  CYTHON_UNUSED int __pyx_v_test2;
   PyObject *__pyx_v_a = NULL;
   PyObject *__pyx_v_b = NULL;
   PyObject *__pyx_r = NULL;
@@ -990,14 +993,23 @@ static PyObject *__pyx_pf_5testa_fib(CYTHON_UNUSED PyObject *__pyx_self, PyObjec
  *     """Print the Fibonacci series up to n."""
  * 
  *     cdef int test = 3             # <<<<<<<<<<<<<<
+ *     cdef int test2 = 2
  *     a, b = 0, 1
- *     while b < n:
  */
   __pyx_v_test = 3;
 
   /* "testa.pyx":5
  * 
  *     cdef int test = 3
+ *     cdef int test2 = 2             # <<<<<<<<<<<<<<
+ *     a, b = 0, 1
+ *     while b < n:
+ */
+  __pyx_v_test2 = 2;
+
+  /* "testa.pyx":6
+ *     cdef int test = 3
+ *     cdef int test2 = 2
  *     a, b = 0, 1             # <<<<<<<<<<<<<<
  *     while b < n:
  *         print(test)
@@ -1011,53 +1023,53 @@ static PyObject *__pyx_pf_5testa_fib(CYTHON_UNUSED PyObject *__pyx_self, PyObjec
   __pyx_v_b = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "testa.pyx":6
- *     cdef int test = 3
+  /* "testa.pyx":7
+ *     cdef int test2 = 2
  *     a, b = 0, 1
  *     while b < n:             # <<<<<<<<<<<<<<
  *         print(test)
  *         print b,
  */
   while (1) {
-    __pyx_t_2 = PyObject_RichCompare(__pyx_v_b, __pyx_v_n, Py_LT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 6, __pyx_L1_error)
-    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 6, __pyx_L1_error)
+    __pyx_t_2 = PyObject_RichCompare(__pyx_v_b, __pyx_v_n, Py_LT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 7, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 7, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     if (!__pyx_t_3) break;
 
-    /* "testa.pyx":7
+    /* "testa.pyx":8
  *     a, b = 0, 1
  *     while b < n:
  *         print(test)             # <<<<<<<<<<<<<<
  *         print b,
  *         a, b = b, a + b
  */
-    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_test); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 7, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_test); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    if (__Pyx_PrintOne(0, __pyx_t_2) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+    if (__Pyx_PrintOne(0, __pyx_t_2) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "testa.pyx":8
+    /* "testa.pyx":9
  *     while b < n:
  *         print(test)
  *         print b,             # <<<<<<<<<<<<<<
  *         a, b = b, a + b
  */
-    __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
+    __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 9, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_INCREF(__pyx_v_b);
     __Pyx_GIVEREF(__pyx_v_b);
     PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_v_b);
-    if (__Pyx_Print(0, __pyx_t_2, 0) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
+    if (__Pyx_Print(0, __pyx_t_2, 0) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "testa.pyx":9
+    /* "testa.pyx":10
  *         print(test)
  *         print b,
  *         a, b = b, a + b             # <<<<<<<<<<<<<<
  */
     __pyx_t_2 = __pyx_v_b;
     __Pyx_INCREF(__pyx_t_2);
-    __pyx_t_1 = PyNumber_Add(__pyx_v_a, __pyx_v_b); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 9, __pyx_L1_error)
+    __pyx_t_1 = PyNumber_Add(__pyx_v_a, __pyx_v_b); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 10, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF_SET(__pyx_v_a, __pyx_t_2);
     __pyx_t_2 = 0;
@@ -1134,6 +1146,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_n, __pyx_k_n, sizeof(__pyx_k_n), 0, 0, 1, 1},
   {&__pyx_n_s_print, __pyx_k_print, sizeof(__pyx_k_print), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
+  {&__pyx_n_s_test2, __pyx_k_test2, sizeof(__pyx_k_test2), 0, 0, 1, 1},
   {&__pyx_n_s_test_2, __pyx_k_test_2, sizeof(__pyx_k_test_2), 0, 0, 1, 1},
   {&__pyx_n_s_testa, __pyx_k_testa, sizeof(__pyx_k_testa), 0, 0, 1, 1},
   {&__pyx_kp_s_testa_pyx, __pyx_k_testa_pyx, sizeof(__pyx_k_testa_pyx), 0, 0, 1, 0},
@@ -1152,10 +1165,10 @@ static int __Pyx_InitCachedConstants(void) {
  *     """Print the Fibonacci series up to n."""
  * 
  */
-  __pyx_tuple_ = PyTuple_Pack(4, __pyx_n_s_n, __pyx_n_s_test, __pyx_n_s_a, __pyx_n_s_b); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(5, __pyx_n_s_n, __pyx_n_s_test, __pyx_n_s_test2, __pyx_n_s_a, __pyx_n_s_b); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
-  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(1, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_testa_pyx, __pyx_n_s_fib, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(1, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_testa_pyx, __pyx_n_s_fib, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
