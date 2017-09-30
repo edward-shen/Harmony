@@ -1,4 +1,4 @@
 build/*
 *.so
-.idea/vcs.xml
+.vscode/*
 .directory
