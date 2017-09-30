@@ -106,7 +106,7 @@ namespace harmony {
                 }
                 case EventType::CONV_JOINED: {
                     std::string* conv_name = (std::string*) evt->event_data;
-                    temp_notify_conv_joined(*conv_name);
+                    // temp_notify_conv_joined(*conv_name);
                     delete conv_name;
                     break;
                 }
