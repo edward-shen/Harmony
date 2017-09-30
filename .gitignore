@@ -1,5 +1,6 @@
 build/*
 *.so
-.idea/vcs.xml
+.vscode/*
 .directory
+build-harmony-ui-Desktop-Debug/*
 *.out
