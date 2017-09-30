@@ -16,7 +16,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    recieve_conversation_invite();
+    void recieve_conversation_invite();
 
 private slots:
     void on_EnterButton_pressed();

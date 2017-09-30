@@ -27,15 +27,18 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     ../event.cpp \
-    conversationinviteaccept.cpp
+    conversationinviteaccept.cpp \
+    createconveration.cpp
 
 HEADERS += \
         mainwindow.h \
     ../event.h \
-    conversationinviteaccept.h
+    conversationinviteaccept.h \
+    createconveration.h
 
 FORMS += \
         mainwindow.ui \
-    conversationinviteaccept.ui
+    conversationinviteaccept.ui \
+    createconveration.ui
 
 CONFIG += c++14

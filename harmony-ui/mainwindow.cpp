@@ -53,7 +53,10 @@ void MainWindow::post_message()
     harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::SEND_PLAINTEXT, heap_text));
 }
 
-MainWindow::recieve_conversation_invite()
+void MainWindow::recieve_conversation_invite()
 {
-
+    // Todo: Make modalless
+    ConversationInviteAccept cia;
+    cia.setModal(true);
+    cia.exec();
 }
