@@ -9,6 +9,8 @@
 #include "event.h"
 #include "spread.h"
 
+#include "qt_main.h"
+
 #pragma comment(lib, "Ws2_32.lib")
 
 static harmony::conv::invite_notification* current_inv = nullptr;
@@ -83,7 +85,9 @@ void temp_prompt_invite(harmony::conv::invite_notification inv) {
     current_inv = new harmony::conv::invite_notification(inv);
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+    qt_main(argc, argv);
+
     harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::INIT_CONN, nullptr));
 
     std::thread reader(temp_stdin_reader);

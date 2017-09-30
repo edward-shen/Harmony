@@ -6,10 +6,12 @@
 #include "interface.h"
 #include "room.h"
 #include "encrypt.h"
+#include <json.hpp>
+using nlohmann::json;
 
 namespace harmony {
     namespace conv {
-        static std::string nickname;
+        static std::string username;
         static np1sec::Room* room;
 
         static std::unordered_map<std::string, np1sec::Conversation*> conversations;
@@ -32,15 +34,15 @@ namespace harmony {
 
         /// Returns our current username
         std::string my_username() {
-            return nickname;
+            return username;
         }
 
         /// Initializes n+1sec. Assumes network layer is ready.
         /// nickname: your nickname
-        void init_comm(std::string _nickname) {
-            nickname = _nickname;
+        void init_comm(std::string _username) {
+            username = _username;
             HarmonyRoomInterface* itf = new HarmonyRoomInterface();
-            room = new np1sec::Room(itf, nickname, np1sec::PrivateKey::generate(true));
+            room = new np1sec::Room(itf, username, np1sec::PrivateKey::generate(true));
             room->connect();
             make_conv();
         }
