@@ -7,6 +7,7 @@
 #include "room.h"
 #include "encrypt.h"
 #include <json.hpp>
+#include <unordered_set>
 #include <thread>
 using nlohmann::json;
 
@@ -97,6 +98,10 @@ namespace harmony {
                 }
                 conversation->invite(inv.who, users[inv.who]);
             }
+        }
+
+        void send_user_update() {
+
         }
 
         /// Queues a plaintext message for encryption.
@@ -232,10 +237,14 @@ namespace harmony {
 
         void HarmonyRoomInterface::user_joined(const std::string& username, const np1sec::PublicKey& public_key) {
             std::cerr << "Room user joined " << username << std::endl;
+
+            send_user_update();
         }
 
         void HarmonyRoomInterface::user_left(const std::string& username, const np1sec::PublicKey& public_key) {
             std::cerr << "Room user left " << username << std::endl;
+
+            send_user_update();
         }
 
         np1sec::ConversationInterface* HarmonyRoomInterface::created_conversation(np1sec::Conversation* conversation) {

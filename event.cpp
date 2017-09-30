@@ -2,6 +2,8 @@
 #include "spread.h"
 #include "encrypt.h"
 #include "main.h"
+#include "harmony-ui/mainwindow.h"
+#include "qt_main.h"
 
 #include <iostream>
 
@@ -69,7 +71,7 @@ namespace harmony {
                 break;
             }
             case EventType::INIT_CONN:
-                //harmony::spread_init();
+                harmony::spread_init();
                 break;
             case EventType::INIT_NP1SEC: {
                 std::string* data = (std::string*) evt->event_data;
@@ -100,7 +102,7 @@ namespace harmony {
             }
             case EventType::RECV_PLAINTEXT: {
                 harmony::conv::conv_message* msg = (harmony::conv::conv_message*) evt->event_data;
-                temp_display_plaintext(*msg);
+                g_main_win->recieve_plaintext(msg);
                 delete msg;
                 break;
             }

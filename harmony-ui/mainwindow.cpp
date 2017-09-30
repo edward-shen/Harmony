@@ -45,12 +45,16 @@ void MainWindow::on_MessageInput_returnPressed()
 void MainWindow::post_message()
 {
     QString text = ui->MessageInput->text();
-    std::string* heap_text = new std::string(text.toUtf8().constData());
 
-    ui->MessageHistory->append(QString::fromStdString(username + ": ") + text);
+    //ui->MessageHistory->append(QString::fromStdString(username + ": ") + text);
     ui->MessageInput->clear();
 
-    harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::SEND_PLAINTEXT, heap_text));
+    harmony::conv::conv_message* msg = new harmony::conv::conv_message(harmony::conv::default_conv(), harmony::conv::my_username(), std::string(text.toUtf8().constData()));
+    harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::SEND_PLAINTEXT, msg));
+}
+
+void MainWindow::recieve_plaintext(harmony::conv::conv_message* msg) {
+    ui->MessageHistory->append(QString::fromStdString(msg->sender + ": ") + QString::fromStdString(msg->message));
 }
 
 void MainWindow::recieve_conversation_invite()

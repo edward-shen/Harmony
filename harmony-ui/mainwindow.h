@@ -5,6 +5,8 @@
 #include <string>
 #include <memory>
 
+#include "../encrypt.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -17,6 +19,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void recieve_conversation_invite();
+    void recieve_plaintext(harmony::conv::conv_message* msg);
 
 private slots:
     void on_EnterButton_pressed();
