@@ -45,10 +45,10 @@ void MainWindow::on_MessageInput_returnPressed()
 void MainWindow::post_message()
 {
     QString text = ui->MessageInput->text();
-    ui->MessageHistory->append(text);
-    ui->MessageInput->clear();
-
     std::string* heap_text = new std::string(text.toUtf8().constData());
+
+    ui->MessageHistory->append(QString(username += text));
+    ui->MessageInput->clear();
 
     harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::SEND_PLAINTEXT, heap_text));
 }

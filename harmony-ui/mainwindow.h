@@ -24,6 +24,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     void post_message();
+    std::string username = "";
 };
 
 #endif // MAINWINDOW_H

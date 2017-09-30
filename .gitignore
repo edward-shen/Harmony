@@ -16,4 +16,4 @@ include/spread-src-4.4.0/libspread-util/lib/win32/Debug/libspread-util.pdb
 CMakeSettings.json
 .idea/vcs.xml
 .directory
-
+.autosave
