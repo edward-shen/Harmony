@@ -134,7 +134,7 @@
 #  define sock_errno        WSAGetLastError()
 #  define sock_set_errno    WSASetLastError
 #  define MAXPATHLEN        _MAX_PATH
-#  define snprintf          _snprintf
+//#  define snprintf          _snprintf
 #  define alloca            _alloca
 
 /* Sockets are not file descriptors on windows so they need a special close function. */

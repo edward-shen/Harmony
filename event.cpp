@@ -1,4 +1,6 @@
 #include "event.h"
+#include "spread.h"
+
 #include <iostream>
 
 namespace harmony {
@@ -59,7 +61,7 @@ namespace harmony {
 
                 break;
             case EventType::INIT_CONN:
-
+                harmony::spread_init();
                 break;
             case EventType::CLOSE_CONN:
 
@@ -73,9 +75,11 @@ namespace harmony {
             case EventType::NP1SEC_ERROR:
 
                 break;
-            case EventType::SEND_CIPHERTEXT:
-
+            case EventType::SEND_CIPHERTEXT: {
+                std::string* data = (std::string*) evt->event_data;
+                spread_send(*data);
                 break;
+            }
             case EventType::RECV_CIPHERTEXT:
 
                 break;

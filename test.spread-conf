@@ -1,0 +1,14 @@
+Spread_Segment 192.168.1.255:3333 {
+    machine1 192.168.1.115
+    machine2 192.168.1.116
+}
+
+DebugFlags = { PRINT EXIT }
+EventLogFile = testlog.out
+#EventLogFile = spread_%h.log
+EventTimeStamp = "[%a %d %b %Y %H:%M:%S]"
+DangerousMonitor = false
+#SocketPortReuse = AUTO
+#RuntimeDir = /var/run/spread
+#DaemonUser = spread
+#DaemonGroup = spread

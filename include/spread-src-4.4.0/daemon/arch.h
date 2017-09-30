@@ -137,7 +137,7 @@
 #define         sock_errno      WSAGetLastError()
 #define         sock_set_errno  WSASetLastError
 #define         MAXPATHLEN      _MAX_PATH
-#define         snprintf        _snprintf
+//#define         snprintf        _snprintf
 #define         alloca          _alloca
 #define         strdup          _strdup
 #define         fileno          _fileno
