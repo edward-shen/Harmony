@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 project(Harmony)
 add_executable(harmony main.cpp)
-include_directories(${CMAKE_SOURCE_DIR}/include/np1sec/src ${CMAKE_SOURCE_DIR}/include/spread-src-4.4.0/include)
-set(SOURCES main.cpp ${CMAKE_SOURCE_DIR}/include/np1sec/src/*)
+include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/include/np1sec/src ${CMAKE_SOURCE_DIR}/include/spread-src-4.4.0/include)
+set(SOURCES main.cpp ${CMAKE_SOURCE_DIR}/*.cpp ${CMAKE_SOURCE_DIR}/include/np1sec/src/*)
 
 if (WIN32)
 add_library(spread STATIC IMPORTED)
