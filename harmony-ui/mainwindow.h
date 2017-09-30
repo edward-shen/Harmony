@@ -38,6 +38,10 @@ private slots:
     void on_MessageInput_returnPressed();
     void on_actionQuit_triggered();
     void appendChatText(const QString&);
+    void on_action_Settings_triggered();
+    void on_actionCreate_triggered();
+    void on_actionInvite_triggered();
+    void on_actionLeave_triggered();
 
 private:
     void post_message();

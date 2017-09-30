@@ -37,8 +37,7 @@ HEADERS += \
 
 FORMS += \
         harmony-ui/mainwindow.ui \
-    harmony-ui/conversationinviteaccept.ui \
-    harmony-ui/createconveration_copy.ui
+    harmony-ui/conversationinviteaccept.ui
 
 CONFIG += c++14
 

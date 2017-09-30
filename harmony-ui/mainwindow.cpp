@@ -67,3 +67,23 @@ void MainWindow::recieve_conversation_invite(harmony::conv::invite_notification*
 void MainWindow::on_actionQuit_triggered() {
     this->close();
 }
+
+void MainWindow::on_action_Settings_triggered()
+{
+
+}
+
+void MainWindow::on_actionCreate_triggered()
+{
+
+}
+
+void MainWindow::on_actionInvite_triggered()
+{
+
+}
+
+void MainWindow::on_actionLeave_triggered()
+{
+
+}
