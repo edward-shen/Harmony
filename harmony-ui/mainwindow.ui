@@ -69,7 +69,18 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
+<<<<<<< HEAD
       <widget class="QLineEdit" name="MessageInput"/>
+=======
+      <widget class="QPlainTextEdit" name="MessageInput">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+>>>>>>> 7c1c6705ff147e168804e00581d887d6ff409818
      </item>
      <item>
       <widget class="QPushButton" name="EnterButton">
