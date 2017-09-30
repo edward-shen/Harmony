@@ -2,3 +2,4 @@ build/*
 *.so
 .vscode/*
 .directory
+build-harmony-ui-Desktop-Debug/*
