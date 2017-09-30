@@ -38,7 +38,6 @@ namespace harmony {
             return p2;
         }
 
-    public:
         std::queue<std::unique_ptr<T>> q;
         mutable std::mutex m;
         std::condition_variable c;
