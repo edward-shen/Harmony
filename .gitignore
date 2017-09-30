@@ -17,3 +17,4 @@ CMakeSettings.json
 .idea/vcs.xml
 .directory
 .autosave
+*.user

@@ -24,21 +24,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp \
-    ../event.cpp \
-    conversationinviteaccept.cpp \
-    createconveration.cpp
+        harmony-ui/qtmain.cpp \
+        harmony-ui/mainwindow.cpp \
+    event.cpp \
+    harmony-ui/conversationinviteaccept.cpp \
+    harmony-ui/createconveration.cpp \
+    main.cpp
 
 HEADERS += \
-        mainwindow.h \
-    ../event.h \
-    conversationinviteaccept.h \
-    createconveration.h
+        harmony-ui/mainwindow.h \
+    event.h \
+    harmony-ui/conversationinviteaccept.h \
+    harmony-ui/createconveration.h
 
 FORMS += \
-        mainwindow.ui \
-    conversationinviteaccept.ui \
-    createconveration.ui
+        harmony-ui/mainwindow.ui \
+    harmony-ui/conversationinviteaccept.ui \
+    harmony-ui/createconveration.ui
 
 CONFIG += c++14
