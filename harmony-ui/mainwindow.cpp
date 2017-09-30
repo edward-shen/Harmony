@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     updater = new GUIUpdater();
     updater->moveToThread(thread);
     connect(updater, SIGNAL(_appendChatText(QString)), this, SLOT(appendChatText(QString)));
+    connect(updater, SIGNAL(_setUsers(QStringList)), this, SLOT(setUsers(QStringList)));
     connect(thread, SIGNAL(destroyed()), updater, SLOT(deleteLater()));
 }
 
@@ -43,6 +44,11 @@ void MainWindow::appendChatText(const QString& text) {
     ui->MessageHistory->append(text);
 }
 
+void MainWindow::setUsers(const QStringList& list) {
+    ui->UserList->clear();
+    ui->UserList->insertItems(0, list);
+}
+
 void MainWindow::post_message() {
     QString text = ui->MessageInput->text();
     if (text.trimmed() != "") {
@@ -59,9 +65,20 @@ void MainWindow::recieve_plaintext(harmony::conv::conv_message* msg) {
     g_main_win->updater->appendChatText(QString::fromStdString(msg->sender + ": ") + QString::fromStdString(msg->message));
 }
 
+void MainWindow::recieve_user_list(std::vector<std::string>* users) {
+    QStringList list;
+    std::string me = harmony::conv::my_username();
+    for (auto it = users->begin(); it != users->end(); ++it) {
+        std::string user = *it;
+        if (user == me) user = user + " (YOU)";
+        list << QString::fromStdString(user);
+    }
+    g_main_win->updater->setUsers(list);
+}
+
 void MainWindow::recieve_conversation_invite(harmony::conv::invite_notification* inv) {
-    CIAWindow = new ConversationInviteAccept(); // Be sure to destroy your window somewhere
-    CIAWindow->show();
+    //CIAWindow = new ConversationInviteAccept(); // Be sure to destroy your window somewhere
+    //CIAWindow->show();
 }
 
 void MainWindow::on_actionQuit_triggered() {

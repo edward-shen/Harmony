@@ -4,11 +4,14 @@
 
 MainWindow* g_main_win;
 
-int qt_main(int argc, char *argv[]) {
-    QApplication a(argc, argv);
-    MainWindow w;
-    g_main_win = &w;
-    w.show();
+QApplication* a;
 
-    return a.exec();
+void qt_init(int argc, char *argv[]) {
+    a = new QApplication(argc, argv);
+    g_main_win = new MainWindow();
+    g_main_win->show();
+}
+
+int qt_run() {
+    return a->exec();
 }

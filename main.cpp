@@ -94,11 +94,12 @@ void harmony_events_thread() {
 }
 
 int main(int argc, char *argv[]) {
-    harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::INIT_CONN, nullptr));
+    qt_init(argc, argv);
 
+    harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::INIT_CONN, nullptr));
     std::thread har_evt(harmony_events_thread);
 
-    int res = qt_main(argc, argv);
+    int res = qt_run();
 
     system("PAUSE");
     return res;

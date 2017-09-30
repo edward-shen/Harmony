@@ -102,7 +102,7 @@ namespace harmony {
             }
             case EventType::RECV_PLAINTEXT: {
                 harmony::conv::conv_message* msg = (harmony::conv::conv_message*) evt->event_data;
-                g_main_win->recieve_plaintext(msg);
+                MainWindow::recieve_plaintext(msg);
                 delete msg;
                 break;
             }
@@ -117,9 +117,7 @@ namespace harmony {
             }
             case EventType::UPDATE_USERS: {
                 std::vector<std::string>* data = (std::vector<std::string>*) evt->event_data;
-
-                // do something with data
-
+                MainWindow::recieve_user_list(data);
                 delete data;
                 break;
             }

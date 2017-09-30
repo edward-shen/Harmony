@@ -234,10 +234,14 @@ namespace harmony {
 
         void HarmonyRoomInterface::connected() {
             std::cerr << "Room connected" << std::endl;
+
+            send_user_update();
         }
 
         void HarmonyRoomInterface::disconnected() {
             std::cerr << "Room disconnected" << std::endl;
+
+            send_user_update();
         }
 
         void HarmonyRoomInterface::user_joined(const std::string& username, const np1sec::PublicKey& public_key) {

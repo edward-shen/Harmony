@@ -3,4 +3,5 @@
 
 extern MainWindow* g_main_win;
 
-int qt_main(int argc, char *argv[]);
+void qt_init(int argc, char *argv[]);
+int qt_run();
