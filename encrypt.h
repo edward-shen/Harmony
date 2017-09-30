@@ -70,6 +70,7 @@ namespace harmony
         void received_message(const std::string& sender, const std::string& message);
 		void make_conv();
 		void join_conv(invite_notification inv);
+        void leave_conv(const std::string& conv);
 		void init_comm(std::string username);
         void send_invite(invite_out invite);
         void user_left(std::string username);

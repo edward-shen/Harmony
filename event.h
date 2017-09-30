@@ -21,6 +21,8 @@ namespace harmony {
         /// event_data is invite_out* of user to invite
         SEND_INVITE,
         CLOSE_CONN,
+        /// User left the conversation. event_data is name of conv
+        CONV_LEAVE,
 
         // np1sec to UI
         /// event_data is invite_notification
@@ -42,8 +44,7 @@ namespace harmony {
         RECV_CIPHERTEXT,
         /// event_data is std::string* of the username
         USER_LEFT,
-        // User left the conversation
-        CONV_LEAVE,
+
         // spread to UI
         SPREAD_ERROR
     };

@@ -87,6 +87,11 @@ namespace harmony {
             }
         }
 
+        void leave_conv(const std::string& conv) {
+            conversations[conv]->leave(true);
+            conversations.erase(conv);
+        }
+
         void send_invite(invite_out inv) {
             np1sec::Conversation* conversation = conversations[inv.conv];
             if (room) {

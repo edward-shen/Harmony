@@ -106,7 +106,7 @@ namespace harmony {
                 }
                 case EventType::CONV_JOINED: {
                     std::string* conv_name = (std::string*) evt->event_data;
-                    // temp_notify_conv_joined(*conv_name);
+                    MainWindow::recieve_conversation_joined(*conv_name);
                     delete conv_name;
                     break;
                 }
@@ -144,7 +144,9 @@ namespace harmony {
                     break;
                 }
                 case EventType::CONV_LEAVE: {
-
+                    std::string* data = (std::string*) evt->event_data;
+                    harmony::conv::leave_conv(*data);
+                    delete data;
                     break;
                 }
                 case EventType::SPREAD_ERROR:
