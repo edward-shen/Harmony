@@ -34,6 +34,8 @@ namespace harmony {
         // np1sec to spread
         /// event_data is std::string* with the message
         SEND_CIPHERTEXT,
+        /// event_data is std::vector<std::string>* with the current room user list
+        UPDATE_USERS,
 
         // spread to np1sec
         /// event_data is spread_recv* with the message

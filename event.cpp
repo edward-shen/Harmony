@@ -115,6 +115,14 @@ namespace harmony {
                 delete data;
                 break;
             }
+            case EventType::UPDATE_USERS: {
+                std::vector<std::string>* data = (std::vector<std::string>*) evt->event_data;
+
+                // do something with data
+
+                delete data;
+                break;
+            }
             case EventType::RECV_CIPHERTEXT: {
                 spread_recv* data = (spread_recv*) evt->event_data;
                 harmony::conv::received_message(data->sender, data->data);

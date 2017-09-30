@@ -101,7 +101,12 @@ namespace harmony {
         }
 
         void send_user_update() {
-
+            auto users_map = room->users();
+            std::vector<std::string>* users_list = new std::vector<std::string>();
+            for (auto it = users_map.begin(); it != users_map.end(); ++it) {
+                users_list->push_back(it->first);
+            }
+            event_queue(std::make_unique<Event>(EventType::UPDATE_USERS, users_list));
         }
 
         /// Queues a plaintext message for encryption.
