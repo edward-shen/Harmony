@@ -155,7 +155,9 @@ void MainWindow::on_actionInvite_triggered() {
     if (itm == nullptr) return;
     std::string name(itm->text().toUtf8().constData());
     if (hasEnding(name, " (YOU)")) return;
-    harmony::conv::invite_out* inv = new harmony::conv::invite_out(name, harmony::conv::default_conv());
+    std::string conv = current_channel;
+    if (conv.size() == 0) conv = harmony::conv::default_conv();
+    harmony::conv::invite_out* inv = new harmony::conv::invite_out(name, conv);
     harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::SEND_INVITE, inv));
 }
 
