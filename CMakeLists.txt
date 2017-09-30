@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8.0)
+cmake_minimum_required(VERSION 3.5.0)
 project(Harmony)
 
 set (CMAKE_CXX_STANDARD 11)
@@ -10,26 +10,23 @@ if (WIN32)
 set (CMAKE_PREFIX_PATH "C:/Qt5/5.9.1/msvc2015/")
 endif (WIN32)
 
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+
 find_package(Qt5Widgets)
 
-set (HarmonyWindow_src ${PROJECT_SOURCE_DIR}/harmony-ui/mainwindow.cpp)
-set (HarmonyWindow_hdr ${PROJECT_SOURCE_DIR}/harmony-ui/mainwindow.h)
-set (HarmonyWindow_ui ${PROJECT_SOURCE_DIR}/harmony-ui/mainwindow.ui)
-set (HarmonyWindow_main ${PROJECT_SOURCE_DIR}/harmony-ui/qt_main.cpp)
-set (HarmonyWindow_mainh ${PROJECT_SOURCE_DIR}/harmony-ui/qt_main.h)
-
-qt5_wrap_cpp(HarmonyWindow_hdr_moc ${HarmonyWindow_hdr})
-qt5_wrap_ui (HarmonyWindow_ui_moc  ${HarmonyWindow_ui})
+file(GLOB hw_SRC
+    "${CMAKE_SOURCE_DIR}/harmony-ui/*.cpp"
+    "${CMAKE_SOURCE_DIR}/harmony-ui/*.h"
+    "${CMAKE_SOURCE_DIR}/harmony-ui/*.ui"
+)
 
 include_directories (${PROJECT_SOURCE_DIR})
+include_directories (${PROJECT_SOURCE_DIR}/harmony-ui)
 include_directories (${PROJECT_BINARY_DIR})
 
 add_library (HarmonyWindow STATIC 
-    ${HarmonyWindow_src}
-    ${HarmonyWindow_hdr_moc}
-    ${HarmonyWindow_ui_moc}
-    ${HarmonyWindow_main}
-    ${HarmonyWindow_mainh}
+  ${hw_SRC}
 )
 include_directories(${Qt5Widgets_INCLUDE_DIRS})
 target_link_libraries (HarmonyWindow Qt5::Widgets)
