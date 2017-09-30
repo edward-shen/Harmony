@@ -125,7 +125,7 @@
   </action>
   <action name="actionQuit">
    <property name="text">
-    <string>Quit</string>
+    <string>&amp;Quit</string>
    </property>
    <property name="toolTip">
     <string>&amp;Quit</string>
@@ -133,17 +133,17 @@
   </action>
   <action name="actionCreate">
    <property name="text">
-    <string>Create</string>
+    <string>&amp;Create</string>
    </property>
   </action>
   <action name="actionInvite">
    <property name="text">
-    <string>Invite</string>
+    <string>&amp;Invite</string>
    </property>
   </action>
   <action name="actionLeave">
    <property name="text">
-    <string>Leave</string>
+    <string>&amp;Leave</string>
    </property>
   </action>
  </widget>

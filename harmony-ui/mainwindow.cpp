@@ -49,7 +49,9 @@ void MainWindow::post_message()
     //ui->MessageHistory->append(QString::fromStdString(username + ": ") + text);
     ui->MessageInput->clear();
 
-    harmony::conv::conv_message* msg = new harmony::conv::conv_message(harmony::conv::default_conv(), harmony::conv::my_username(), std::string(text.toUtf8().constData()));
+    harmony::conv::conv_message* msg = new harmony::conv::conv_message(harmony::conv::default_conv(),
+                                                                       harmony::conv::my_username(),
+                                                                       std::string(text.toUtf8().constData()));
     harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::SEND_PLAINTEXT, msg));
 }
 
@@ -57,10 +59,13 @@ void MainWindow::recieve_plaintext(harmony::conv::conv_message* msg) {
     ui->MessageHistory->append(QString::fromStdString(msg->sender + ": ") + QString::fromStdString(msg->message));
 }
 
-void MainWindow::recieve_conversation_invite()
+void MainWindow::recieve_conversation_invite(harmony::conv::invite_notification* inv)
 {
-    // Todo: Make modalless
-    ConversationInviteAccept cia;
-    cia.setModal(true);
-    cia.exec();
+    //CIAWindow = new CIAWindow(); // Be sure to destroy your window somewhere
+    //CIAWindow->show();
+}
+
+void MainWindow::on_actionQuit_triggered()
+{
+    this->close();
 }
