@@ -34,6 +34,9 @@ namespace harmony {
         std::cerr << "Joined group harmony" << std::endl;
 
         recv = std::thread(spread_recv_thread);
+
+        std::string* heap_str = new std::string(priv_grp);
+        event_queue(std::make_unique<Event>(EventType::INIT_NP1SEC, heap_str));
     }
 
     void spread_send(std::string message) {
@@ -53,8 +56,8 @@ namespace harmony {
             } else if (mess.type == harmony::spread_recv::STATUS) {
                 // do something
             } else if (mess.type == harmony::spread_recv::MESSAGE) {
-                std::string* heap_str = new std::string(mess.data);
-                std::unique_ptr<Event> evt = std::make_unique<Event>(EventType::RECV_CIPHERTEXT, heap_str);
+                harmony::spread_recv* heap_sv = new harmony::spread_recv(mess);
+                std::unique_ptr<Event> evt = std::make_unique<Event>(EventType::RECV_CIPHERTEXT, heap_sv);
                 event_queue(std::move(evt));
             } else {
                 throw std::exception("wtf");
@@ -123,8 +126,14 @@ namespace harmony {
                     fprintf(stderr, "Due to the JOIN of %s\n", memb_info.changed_member);
                 } else if (Is_caused_leave_mess(service_type)) {
                     fprintf(stderr, "Due to the LEAVE of %s\n", memb_info.changed_member);
+
+                    event_queue(std::make_unique<Event>(EventType::USER_LEFT, new std::string(memb_info.changed_member)));
+
                 } else if (Is_caused_disconnect_mess(service_type)) {
                     fprintf(stderr, "Due to the DISCONNECT of %s\n", memb_info.changed_member);
+
+                    event_queue(std::make_unique<Event>(EventType::USER_LEFT, new std::string(memb_info.changed_member)));
+
                 } else if (Is_caused_network_mess(service_type)) {
                     fprintf(stderr, "Due to NETWORK change with %u VS sets\n", memb_info.num_vs_sets);
                     num_vs_sets = SP_get_vs_sets_info(mess, &vssets[0], MAX_VSSETS, &my_vsset_index);

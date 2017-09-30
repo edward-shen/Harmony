@@ -14,3 +14,6 @@ include/spread-src-4.4.0/libspread-util/lib/win32/Debug/libspread-util.lib
 include/spread-src-4.4.0/libspread-util/lib/win32/Debug/libspread-util.pdb
 .vs/*
 CMakeSettings.json
+.idea/vcs.xml
+.directory
+

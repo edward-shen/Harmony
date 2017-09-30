@@ -8,17 +8,26 @@
 namespace harmony {
     enum class EventType {
         // UI to np1sec
-        /// event_data is std::string* with the message
+        /// event_data is conv_message* with the message
         SEND_PLAINTEXT,
-        MAKE_ROOM,
-        JOIN_ROOM,
+        /// event_data is nullptr
+        MAKE_CONV,
+        /// event_data is invite_notification
+        JOIN_CONV,
         /// event_data is nullptr
         INIT_CONN,
+        /// event_data is the spread sender name
+        INIT_NP1SEC,
+        /// event_data is invite_out* of user to invite
+        SEND_INVITE,
         CLOSE_CONN,
 
         // np1sec to UI
+        /// event_data is invite_notification
         PROMPT_INVITE,
-        /// event_data is std::string* with the message
+        /// event_data is the name of the conversation.
+        CONV_JOINED,
+        /// event_data is conv_message* with the message
         RECV_PLAINTEXT,
         NP1SEC_ERROR,
 
@@ -27,8 +36,10 @@ namespace harmony {
         SEND_CIPHERTEXT,
 
         // spread to np1sec
-        /// event_data is std::string* with the message
+        /// event_data is spread_recv* with the message
         RECV_CIPHERTEXT,
+        /// event_data is std::string* of the username
+        USER_LEFT,
 
         // spread to UI
         SPREAD_ERROR
@@ -40,12 +51,7 @@ namespace harmony {
         EventType type;
         void* event_data;
 
-        Event(EventType type, void* event_data) : type(type), event_data(event_data) {
-        }
-
-        virtual ~Event() {
-            delete event_data;
-        }
+        Event(EventType type, void* event_data) : type(type), event_data(event_data) {}
     };
 
     void event_queue(std::unique_ptr<Event>);

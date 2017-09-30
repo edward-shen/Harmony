@@ -24,6 +24,9 @@ namespace harmony {
 
         spread_recv(mt type, char* sender, char* data)
             : type(type), sender(sender), data(data) {}
+
+        spread_recv(const spread_recv& other)
+            : type(other.type), sender(other.sender), data(other.data) {}
     };
 
     spread_recv spread_block_recv();
