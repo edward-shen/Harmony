@@ -12,3 +12,5 @@ include/spread-src-4.4.0/lib/*
 include/spread-src-4.4.0/libspread-util/include/spu_system.h
 include/spread-src-4.4.0/libspread-util/lib/win32/Debug/libspread-util.lib
 include/spread-src-4.4.0/libspread-util/lib/win32/Debug/libspread-util.pdb
+.vs/*
+CMakeSettings.json
