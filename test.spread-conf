@@ -1,6 +1,7 @@
 Spread_Segment 192.168.1.255:3333 {
-    machine1 192.168.1.115
-    machine2 192.168.1.116
+    machine1 192.168.1.146
+    machine2 192.168.1.115
+    machine3 192.168.1.116
 }
 
 DebugFlags = { PRINT EXIT }
