@@ -18,7 +18,7 @@ public:
 
 private slots:
     void on_EnterButton_pressed();
-    void on_MessageInput_textChanged();
+    void on_MessageInput_returnPressed();
 
 private:
     Ui::MainWindow *ui;
