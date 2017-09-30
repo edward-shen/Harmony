@@ -64,6 +64,8 @@ private slots:
     void setUsers(const QStringList&);
     void promptInvite(const QCustomData&);
     void displayConvList(const QStringList&);
+    void on_ConvList_currentRowChanged(int currentRow);
+
 private:
     void post_message();
     Ui::MainWindow *ui;

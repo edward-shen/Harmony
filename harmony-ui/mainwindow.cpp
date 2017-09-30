@@ -158,3 +158,8 @@ void MainWindow::on_actionInvite_triggered() {
 void MainWindow::on_actionLeave_triggered() {
 
 }
+
+void MainWindow::on_ConvList_currentRowChanged(int currentRow)
+{
+
+}
