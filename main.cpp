@@ -1,7 +1,14 @@
 #include <iostream>
 
+#include <event.h>
+
 int main() {
-  std::cout << "Sample text";
-  system("PAUSE");
-  return 0;
+    // todo init
+
+    while (true) {
+        harmony::event_process();
+    }
+
+    system("PAUSE");
+    return 0;
 }
