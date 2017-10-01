@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "../event.h"
 #include "conversationinviteaccept.h"
@@ -81,9 +81,9 @@ void MainWindow::setUsers(const QStringList& list) {
 bool hasEnding(std::string const &fullString, std::string const &ending) {
     if (fullString.length() >= ending.length()) {
         return (0 == fullString.compare(fullString.length() - ending.length(), ending.length(), ending));
-    } else {
-        return false;
     }
+
+    return false;
 }
 
 /**
@@ -111,39 +111,66 @@ void MainWindow::post_message() {
 }
 
 /**
- * @brief MainWindow::recieve_plaintext
- * @param msg
+ * @brief MainWindow::recieve_plaintext Adds a recieved message to the
+ * appropiate context
+ * @param msg Message to be appended.
  */
 void MainWindow::recieve_plaintext(harmony::conv::conv_message* msg) {
     if (conv_map.find(msg->conv) == conv_map.end()) {
+        // This should never happen. Ever. You should panic if this happens.
+        // This either means someone fucked up correctly implementing the
+        // Associated functions or someone has cracked np1sec.
+        // Pray it is the former.
         throw std::runtime_error("Recieved malformed data!");
     }
+
+    // ostringstream is kinda like a (Java) string buffer
+    // We select the correct ostringstream by using a map.
     std::ostringstream* out = conv_map[msg->conv];
+    // Appends the the message data to the correct ostringstream
     *out << msg->sender << ": " << msg->message << '\n';
 
-    if (current_channel.size() == 0 || conv_map.find(current_channel) == conv_map.end())
-        return;
-
-    g_main_win->updater->appendChatText(QString::fromStdString(conv_map[current_channel]->str()));
+    // Call our main window's UI thread updater to append the text to the
+    // appropiate channel, if there's a valid channel.
+    if (current_channel.size() != 0 && conv_map.find(current_channel) != conv_map.end()) {
+        g_main_win->updater->appendChatText(QString::fromStdString(conv_map[current_channel]->str()));
+    }
 }
 
+/**
+ * @brief MainWindow::recieve_user_list  Constructs a Stringlist from the params
+ * and appends " (YOU)" to your own username. Then updates the the userlist.
+ * @param users list of users to be added.
+ */
 void MainWindow::recieve_user_list(std::vector<std::string>* users) {
     QStringList list;
     std::string me = harmony::conv::my_username();
+
+    // There's a better way to do this but this works for now.
     for (auto it = users->begin(); it != users->end(); ++it) {
         std::string user = *it;
-        if (user == me) user = user + " (YOU)";
+        if (user == me) { user = user + " (YOU)"; }
         list << QString::fromStdString(user);
     }
     g_main_win->updater->setUsers(list);
 }
 
+/**
+ * @brief MainWindow::recieve_conversation_invite Packages the convo invite
+ * and pass it to UI.
+ * @param inv The invite request to be sent.
+ */
 void MainWindow::recieve_conversation_invite(harmony::conv::invite_notification* inv) {
     harmony::conv::invite_notification* inv2 = new harmony::conv::invite_notification(*inv);
     QCustomData data(inv2);
     g_main_win->updater->promptInvite(data);
 }
 
+/**
+ * @brief MainWindow::recieve_conversation_joined Adds the conversation
+ * name to our hashmap of conversations (and their names)
+ * @param name name of conversation to be added.
+ */
 void MainWindow::recieve_conversation_joined(std::string& name) {
     std::ostringstream* os = new std::ostringstream();
     conv_map[name] = os;
@@ -154,6 +181,11 @@ void MainWindow::recieve_conversation_joined(std::string& name) {
     g_main_win->updater->displayConvList(list);
 }
 
+/**
+ * @brief MainWindow::promptInvite Unpackages the Conversation invite, and
+ * creates a dialogue box asking the user to join the convo.
+ * @param from Conversation invite sent from another client
+ */
 void MainWindow::promptInvite(const QCustomData& from) {
     harmony::conv::invite_notification* inv = (harmony::conv::invite_notification*) from.ptr();
 
@@ -165,6 +197,11 @@ void MainWindow::promptInvite(const QCustomData& from) {
     }
 }
 
+/**
+ * @brief MainWindow::displayConvList Clears and sets the conversation list
+ * to the provided list
+ * @param list the list of conversations
+ */
 void MainWindow::displayConvList(const QStringList& list) {
     ui->ConvList->clear();
     ui->ConvList->insertItems(0, list);
@@ -179,6 +216,7 @@ void MainWindow::on_actionQuit_triggered() {
     this->close();
 }
 
+// TODO: Determine if we can remove this
 void MainWindow::on_action_Settings_triggered() {
 
 }
@@ -210,6 +248,7 @@ void MainWindow::on_actionInvite_triggered() {
     if (itm == nullptr) { return; }
 
     std::string name(itm->text().toUtf8().constData());
+
     // You cannot invite yourself
     if (hasEnding(name, " (YOU)")) { return; }
 
@@ -222,25 +261,36 @@ void MainWindow::on_actionInvite_triggered() {
     harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::SEND_INVITE, inv));
 }
 
+/**
+ * @brief MainWindow::on_actionLeave_triggered Removes the selected
+ * conversation from the list of availble conversations, and places the user
+ * in another valid conversation.
+ */
 void MainWindow::on_actionLeave_triggered() {
     QListWidgetItem* itm = ui->ConvList->currentItem();
-    if (itm == nullptr) return;
-    if (conv_map.size() < 2) return;
-    std::string conv(itm->text().toUtf8().constData());
-    if (conv_map.find(conv) != conv_map.end()) {
-        conv_map.erase(conv);
-        harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::CONV_LEAVE, new std::string(conv)));
+    if (itm != nullptr && conv_map.size() >= 2) {
+        std::string conv(itm->text().toUtf8().constData());
+        if (conv_map.find(conv) != conv_map.end()) {
+            conv_map.erase(conv);
+            harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::CONV_LEAVE, new std::string(conv)));
+        }
+        QStringList list;
+        for (auto it = conv_map.begin(); it != conv_map.end(); ++it) {
+            list << QString::fromStdString(it->first);
+        }
+        updater->displayConvList(list);
     }
-    QStringList list;
-    for (auto it = conv_map.begin(); it != conv_map.end(); ++it) {
-        list << QString::fromStdString(it->first);
-    }
-    updater->displayConvList(list);
 }
 
+/**
+ * @brief MainWindow::on_ConvList_currentRowChanged
+ * Changes the current conversation to the selected conversation
+ * @param currentRow conversation row to change to
+ */
 void MainWindow::on_ConvList_currentRowChanged(int currentRow) {
     QListWidgetItem* itm = ui->ConvList->item(currentRow);
-    if (itm == nullptr) return;
-    current_channel = std::string(itm->text().toUtf8().constData());
-    updater->appendChatText(QString::fromStdString(conv_map[current_channel]->str()));
+    if (itm != nullptr) {
+        current_channel = std::string(itm->text().toUtf8().constData());
+        updater->appendChatText(QString::fromStdString(conv_map[current_channel]->str()));
+    }
 }
