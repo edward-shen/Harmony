@@ -18,9 +18,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
+    // We need to separate our UI updating thread from the event handler thread.
     QThread *thread = new QThread(this);
     updater = new GUIUpdater();
     updater->moveToThread(thread);
+
+    // Create our Qt Signals and Slots! No one apparently knows what they actually do, but
+    // Given the syntax, it looks like they pass the output of the signal into the slot function.
     connect(updater, SIGNAL(_appendChatText(QString)), this, SLOT(appendChatText(QString)));
     connect(updater, SIGNAL(_setUsers(QStringList)), this, SLOT(setUsers(QStringList)));
     connect(updater, SIGNAL(_displayConvList(QStringList)), this, SLOT(displayConvList(QStringList)));
@@ -49,15 +53,30 @@ void MainWindow::on_MessageInput_returnPressed() {
     post_message();
 }
 
+/**
+ * @brief MainWindow::appendChatText appends the message to the history
+ * @param text chat to be appended to the message history
+ */
 void MainWindow::appendChatText(const QString& text) {
     ui->MessageHistory->setText(text);
 }
 
+/**
+ * @brief MainWindow::setUsers clears the current users in the userlist, and
+ * replaces it with the provided list
+ * @param list list of users to be set
+ */
 void MainWindow::setUsers(const QStringList& list) {
     ui->UserList->clear();
     ui->UserList->insertItems(0, list);
 }
 
+/**
+ * @brief hasEnding returns whether or not fullString has ending as their ending
+ * @param fullString Larger string that should be checked for the ending
+ * @param ending string to check for
+ * @return true if fullString ends with ending.
+ */
 bool hasEnding(std::string const &fullString, std::string const &ending) {
     if (fullString.length() >= ending.length()) {
         return (0 == fullString.compare(fullString.length() - ending.length(), ending.length(), ending));
@@ -66,12 +85,21 @@ bool hasEnding(std::string const &fullString, std::string const &ending) {
     }
 }
 
+/**
+ * @brief MainWindow::post_message If the message is valid, adds the message to the queue and clears
+ * the input buffer.
+ */
 void MainWindow::post_message() {
     QString text = ui->MessageInput->text();
     if (text.trimmed() != "") {
+        // Sets the conversation to the default one if there isn't one yet
         if (current_channel.size() == 0) {
             current_channel = harmony::conv::default_conv();
         }
+
+        // Packages the message into a conversation message, so we can add it to the queue.
+        // This is better than directly assuming the message will be sent. Doing it like this
+        // ensures that the message history is the correct order.
         harmony::conv::conv_message* msg = new harmony::conv::conv_message(current_channel,
             harmony::conv::my_username(),
             std::string(text.toUtf8().constData()));
@@ -81,9 +109,13 @@ void MainWindow::post_message() {
     ui->MessageInput->clear();
 }
 
+/**
+ * @brief MainWindow::recieve_plaintext
+ * @param msg
+ */
 void MainWindow::recieve_plaintext(harmony::conv::conv_message* msg) {
     if (conv_map.find(msg->conv) == conv_map.end()) {
-        throw std::runtime_error("wups");
+        throw std::runtime_error("Recieved malformed data!");
     }
     std::ostringstream* out = conv_map[msg->conv];
     *out << msg->sender << ": " << msg->message << '\n';
@@ -138,6 +170,11 @@ void MainWindow::displayConvList(const QStringList& list) {
     ui->ConvList->setCurrentRow(0, QItemSelectionModel::Select);
 }
 
+/**
+ * @brief MainWindow::on_actionQuit_triggered
+ * This is called from the top menu's quit button.
+ * By closing this window, we initiate the closing of the rest of the threads.
+ */
 void MainWindow::on_actionQuit_triggered() {
     this->close();
 }
@@ -146,17 +183,36 @@ void MainWindow::on_action_Settings_triggered() {
 
 }
 
+/**
+ * @brief MainWindow::on_actionCreate_triggered
+ * This is called from the top menu's Create converastion button and places the
+ * user into a new conversation.
+ */
 void MainWindow::on_actionCreate_triggered() {
     harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::MAKE_CONV, nullptr));
 }
 
+/**
+ * @brief MainWindow::on_actionInvite_triggered
+ * This is called from the top menu's Invite conversation button and, if the
+ * user selection is valid, invites the user to another conversation.
+ */
 void MainWindow::on_actionInvite_triggered() {
     QListWidgetItem* itm = ui->UserList->currentItem();
-    if (itm == nullptr) return;
+
+    // You cannot reinvite the same person sucessively
+    if (itm == nullptr) { return; }
+
     std::string name(itm->text().toUtf8().constData());
-    if (hasEnding(name, " (YOU)")) return;
+
+    // You cannot invite yourself
+    if (hasEnding(name, " (YOU)")) { return; }
+
     std::string conv = current_channel;
-    if (conv.size() == 0) conv = harmony::conv::default_conv();
+
+    // If no conv exists, use the default one
+    if (conv.size() == 0) { conv = harmony::conv::default_conv(); }
+
     harmony::conv::invite_out* inv = new harmony::conv::invite_out(name, conv);
     harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::SEND_INVITE, inv));
 }
