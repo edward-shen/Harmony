@@ -21,6 +21,10 @@ Just know if you somehow do get the binaries to compile, you need to run spread 
 # spread -c test.spread-conf
 ```
 
+Also for linux users:
+
+You need to install `libspread` and `libspread-core` and make sure it's in your `LD_LIBRARY_PATH`. What one of our developers did (as a hack) was to copy the library files over to a build folder, and manually added the build folder to the `LD_LIBRARY_PATH`. We'd like to get this fixed but for a time-limited event this was the best we could do.
+
 ### Credits and Acknowledgements
 The Spread Toolkit is under a modified BSD v3 license. As such, we are legally require to state the following:
 
