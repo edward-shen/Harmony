@@ -144,7 +144,14 @@ void MainWindow::recieve_plaintext(harmony::conv::conv_message* msg) {
     // We select the correct ostringstream by using a map.
     std::ostringstream* out = conv_map[msg->conv];
     nlohmann::json dat = nlohmann::json::parse(msg->message);
-    *out << dat["usrname"] << ": " << dat["text"] << '\n';
+    std::string me = dat["usrname"].dump();
+    std::string you = dat["text"].dump();
+    me[0] = ' ';
+    me[me.length()-1] = ' ';
+    you[0] = ' ';
+    you[you.length()-1] = ' ';
+
+    *out << me << ": " << you << '\n';
 
     // Call our main window's UI thread updater to append the text to the
     // appropiate channel, if there's a valid channel.
@@ -243,12 +250,6 @@ void MainWindow::on_action_Settings_triggered() {
  * user into a new conversation.
  */
 void MainWindow::on_actionCreate_triggered() {
-    bool ok;
-    QString text = QInputDialog::getText(this, tr("QInputDialog::getText()"),
-                                         tr("Conversation Name:"), QLineEdit::Normal,
-                                         "hi", &ok);
-    if (ok && !text.isEmpty())
-    {}
     harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::MAKE_CONV, nullptr));
 }
 
@@ -314,7 +315,7 @@ void MainWindow::on_ConvList_currentRowChanged(int currentRow) {
 void MainWindow::on_actionSet_Username_triggered()
 {
     bool ok;
-    QString text = QInputDialog::getText(this, tr("QInputDialog::getText()"), tr("Set Username: "), QLineEdit::Normal, "nothings probably actually better", &ok);
+    QString text = QInputDialog::getText(this, tr("QInputDialog::getText()"), tr("Set Username: "), QLineEdit::Normal, "", &ok);
     if (ok && !text.isEmpty())
     {
         usrname_map[ui->ConvList->currentItem()->text().toUtf8().constData()] = std::string(text.toUtf8().constData());

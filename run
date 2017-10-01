@@ -1,6 +1,8 @@
 #!/bin/bash
 mkdir -p build
 cd build
+cmake clean ..
+make clean
 cmake ..
 make
 spread &
