@@ -4,6 +4,7 @@
 #include "conversationinviteaccept.h"
 #include <qthread.h>
 #include <QMessageBox>
+#include <QInputDialog>
 #include <iostream>
 #include <unordered_map>
 #include <sstream>
@@ -69,10 +70,7 @@ bool hasEnding(std::string const &fullString, std::string const &ending) {
 void MainWindow::post_message() {
     QString text = ui->MessageInput->text();
     if (text.trimmed() != "") {
-        if (current_channel.size() == 0) {
-            current_channel = harmony::conv::default_conv();
-        }
-        harmony::conv::conv_message* msg = new harmony::conv::conv_message(current_channel,
+        harmony::conv::conv_message* msg = new harmony::conv::conv_message(harmony::conv::default_conv(),
             harmony::conv::my_username(),
             std::string(text.toUtf8().constData()));
         harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::SEND_PLAINTEXT, msg));
@@ -135,7 +133,6 @@ void MainWindow::promptInvite(const QCustomData& from) {
 void MainWindow::displayConvList(const QStringList& list) {
     ui->ConvList->clear();
     ui->ConvList->insertItems(0, list);
-    ui->ConvList->setCurrentRow(0, QItemSelectionModel::Select);
 }
 
 void MainWindow::on_actionQuit_triggered() {
@@ -147,6 +144,12 @@ void MainWindow::on_action_Settings_triggered() {
 }
 
 void MainWindow::on_actionCreate_triggered() {
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("QInputDialog::getText()"),
+                                         tr("Conversation Name:"), QLineEdit::Normal,
+                                         "hi", &ok);
+    if (ok && !text.isEmpty())
+    {}
     harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::MAKE_CONV, nullptr));
 }
 
@@ -155,31 +158,15 @@ void MainWindow::on_actionInvite_triggered() {
     if (itm == nullptr) return;
     std::string name(itm->text().toUtf8().constData());
     if (hasEnding(name, " (YOU)")) return;
-    std::string conv = current_channel;
-    if (conv.size() == 0) conv = harmony::conv::default_conv();
-    harmony::conv::invite_out* inv = new harmony::conv::invite_out(name, conv);
+    harmony::conv::invite_out* inv = new harmony::conv::invite_out(name, harmony::conv::default_conv());
     harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::SEND_INVITE, inv));
 }
 
 void MainWindow::on_actionLeave_triggered() {
-    QListWidgetItem* itm = ui->ConvList->currentItem();
-    if (itm == nullptr) return;
-    if (conv_map.size() < 2) return;
-    std::string conv(itm->text().toUtf8().constData());
-    if (conv_map.find(conv) != conv_map.end()) {
-        conv_map.erase(conv);
-        harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::CONV_LEAVE, new std::string(conv)));
-    }
-    QStringList list;
-    for (auto it = conv_map.begin(); it != conv_map.end(); ++it) {
-        list << QString::fromStdString(it->first);
-    }
-    updater->displayConvList(list);
+
 }
 
-void MainWindow::on_ConvList_currentRowChanged(int currentRow) {
-    QListWidgetItem* itm = ui->ConvList->item(currentRow);
-    if (itm == nullptr) return;
-    current_channel = std::string(itm->text().toUtf8().constData());
-    updater->appendChatText(QString::fromStdString(conv_map[current_channel]->str()));
+void MainWindow::on_ConvList_currentRowChanged(int currentRow)
+{
+
 }
