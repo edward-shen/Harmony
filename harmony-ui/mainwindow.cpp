@@ -318,6 +318,12 @@ void MainWindow::on_actionSet_Username_triggered()
     QString text = QInputDialog::getText(this, tr("QInputDialog::getText()"), tr("Set Username: "), QLineEdit::Normal, "", &ok);
     if (ok && !text.isEmpty())
     {
-        usrname_map[ui->ConvList->currentItem()->text().toUtf8().constData()] = std::string(text.toUtf8().constData());
+        QListWidgetItem* itm = ui->ConvList->currentItem();
+        if (itm == nullptr) {
+            ui->ConvList->setCurrentRow(0);
+            usrname_map[ui->ConvList->item(0)->text().toUtf8().constData()] = std::string(text.toUtf8().constData());
+            return;
+        }
+        usrname_map[itm->text().toUtf8().constData()] = std::string(text.toUtf8().constData());
     }
 }
