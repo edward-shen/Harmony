@@ -28,11 +28,15 @@ public:
     void promptInvite(const QCustomData& from) {
         emit _promptInvite(from);
     }
+    void displayConvList(const QStringList& list) {
+        emit _displayConvList(list);
+    }
 
 signals:
     void _appendChatText(const QString&);
     void _setUsers(const QStringList&);
     void _promptInvite(const QCustomData&);
+    void _displayConvList(const QStringList&);
 };
 
 class MainWindow : public QMainWindow
@@ -45,6 +49,8 @@ public:
     static void recieve_conversation_invite(harmony::conv::invite_notification* inv);
     static void recieve_plaintext(harmony::conv::conv_message* msg);
     static void recieve_user_list(std::vector<std::string>* users);
+    static void recieve_conversation_joined(std::string& name);
+
 
 private slots:
     void on_EnterButton_pressed();
@@ -58,6 +64,9 @@ private slots:
     void appendChatText(const QString&);
     void setUsers(const QStringList&);
     void promptInvite(const QCustomData&);
+    void displayConvList(const QStringList&);
+    void on_ConvList_currentRowChanged(int currentRow);
+
 private:
     void post_message();
     Ui::MainWindow *ui;
