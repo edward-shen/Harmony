@@ -82,7 +82,7 @@
      <x>0</x>
      <y>0</y>
      <width>1577</width>
-     <height>47</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -100,11 +100,12 @@
    </widget>
    <widget class="QMenu" name="menuConversation">
     <property name="title">
-     <string>Co&amp;nversation</string>
+     <string>&amp;Conversation</string>
     </property>
     <addaction name="actionCreate"/>
     <addaction name="actionInvite"/>
     <addaction name="actionLeave"/>
+    <addaction name="actionSet_Username"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuConversation"/>
@@ -136,6 +137,11 @@
   <action name="actionLeave">
    <property name="text">
     <string>&amp;Leave</string>
+   </property>
+  </action>
+  <action name="actionSet_Username">
+   <property name="text">
+    <string>Set Username</string>
    </property>
   </action>
  </widget>

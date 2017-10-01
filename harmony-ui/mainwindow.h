@@ -67,6 +67,8 @@ private slots:
     void displayConvList(const QStringList&);
     void on_ConvList_currentRowChanged(int currentRow);
 
+    void on_actionSet_Username_triggered();
+
 private:
     void post_message();
     Ui::MainWindow *ui;

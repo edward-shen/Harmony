@@ -294,3 +294,12 @@ void MainWindow::on_ConvList_currentRowChanged(int currentRow) {
         updater->appendChatText(QString::fromStdString(conv_map[current_channel]->str()));
     }
 }
+
+void MainWindow::on_actionSet_Username_triggered()
+{
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("QInputDialog::getText()"), tr("Set Username: "), QLineEdit::Normal, "nothings probably actually better", &ok);
+    if (ok && !text.isEmpty())
+    {//do something
+    }
+}
