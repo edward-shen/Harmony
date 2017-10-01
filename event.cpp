@@ -48,8 +48,8 @@ namespace harmony {
     static SafeQueue<Event> g_evt_queue;
 
     /**
-     * @brief event_queue
-     * @param evt
+     * @brief event_queue Adds a event to the queue
+     * @param evt event to be added
      */
     void event_queue(std::unique_ptr<Event> evt) {
         g_evt_queue.enqueue(std::move(evt));
