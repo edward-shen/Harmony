@@ -223,10 +223,24 @@ void MainWindow::on_actionInvite_triggered() {
 }
 
 void MainWindow::on_actionLeave_triggered() {
-
+    QListWidgetItem* itm = ui->ConvList->currentItem();
+    if (itm == nullptr) return;
+    if (conv_map.size() < 2) return;
+    std::string conv(itm->text().toUtf8().constData());
+    if (conv_map.find(conv) != conv_map.end()) {
+        conv_map.erase(conv);
+        harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::CONV_LEAVE, new std::string(conv)));
+    }
+    QStringList list;
+    for (auto it = conv_map.begin(); it != conv_map.end(); ++it) {
+        list << QString::fromStdString(it->first);
+    }
+    updater->displayConvList(list);
 }
 
-void MainWindow::on_ConvList_currentRowChanged(int currentRow)
-{
-
+void MainWindow::on_ConvList_currentRowChanged(int currentRow) {
+    QListWidgetItem* itm = ui->ConvList->item(currentRow);
+    if (itm == nullptr) return;
+    current_channel = std::string(itm->text().toUtf8().constData());
+    updater->appendChatText(QString::fromStdString(conv_map[current_channel]->str()));
 }
