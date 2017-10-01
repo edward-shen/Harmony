@@ -13,6 +13,7 @@ extern MainWindow* g_main_win;
 
 std::string current_channel;
 std::unordered_map<std::string, std::ostringstream*> conv_map;
+std::unordered_map<std::string, std::string> usrname_map;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
