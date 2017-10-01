@@ -143,8 +143,8 @@ void MainWindow::recieve_plaintext(harmony::conv::conv_message* msg) {
     // ostringstream is kinda like a (Java) string buffer
     // We select the correct ostringstream by using a map.
     std::ostringstream* out = conv_map[msg->conv];
-    // Appends the the message data to the correct ostringstream
-    *out << msg->sender << ": " << msg->message << '\n';
+    nlohmann::json dat = nlohmann::json::parse(msg->message);
+    *out << dat["usrname"] << ": " << dat["text"] << '\n';
 
     // Call our main window's UI thread updater to append the text to the
     // appropiate channel, if there's a valid channel.
