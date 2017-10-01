@@ -8,6 +8,8 @@
 #include <iostream>
 #include <unordered_map>
 #include <sstream>
+#include <json.hpp>
+using nlohmann::json;
 
 extern MainWindow* g_main_win;
 
@@ -102,10 +104,22 @@ void MainWindow::post_message() {
         // Packages the message into a conversation message, so we can add it to the queue.
         // This is better than directly assuming the message will be sent. Doing it like this
         // ensures that the message history is the correct order.
-        harmony::conv::conv_message* msg = new harmony::conv::conv_message(current_channel,\
+		
+		json msg;
+		auto usrname = usrname_map.find(current_channel);
+		if (usrname != usrname_map.end()) {
+			msg["usrname"] = usrname;
+		}
+		else {
+			msg["usrname"] = harmony::conv::my_username();
+		}
+
+		msg["text"] = std::string(text.toUtf8().constData());
+
+        harmony::conv::conv_message* cmsg = new harmony::conv::conv_message(current_channel,
             harmony::conv::my_username(),
-            std::string(text.toUtf8().constData()));
-        harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::SEND_PLAINTEXT, msg));
+            msg.dump());
+        harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::SEND_PLAINTEXT, cmsg));
     }
 
     ui->MessageInput->clear();
