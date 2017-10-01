@@ -301,6 +301,7 @@ void MainWindow::on_actionSet_Username_triggered()
     bool ok;
     QString text = QInputDialog::getText(this, tr("QInputDialog::getText()"), tr("Set Username: "), QLineEdit::Normal, "nothings probably actually better", &ok);
     if (ok && !text.isEmpty())
-    {//do something
+    {
+		usrname_map[ui->ConvList->currentItem().text().toUtf8().constData()] = std::string(text.toUtf8().constData());
     }
 }
