@@ -11,6 +11,7 @@
 #include <json.hpp>
 using nlohmann::json;
 
+
 extern MainWindow* g_main_win;
 
 std::string current_channel;
@@ -105,21 +106,21 @@ void MainWindow::post_message() {
         // This is better than directly assuming the message will be sent. Doing it like this
         // ensures that the message history is the correct order.
 		
-		json msg;
+        nlohmann::json msge;
 		auto usrname = usrname_map.find(current_channel);
 		if (usrname != usrname_map.end()) {
-			msg["usrname"] = usrname;
+            msge["usrname"] = usrname->second;
 		}
 		else {
-			msg["usrname"] = harmony::conv::my_username();
+            msge["usrname"] = harmony::conv::my_username();
 		}
 
-		msg["text"] = std::string(text.toUtf8().constData());
+        msge["text"] = std::string(text.toUtf8().constData());
 
-        harmony::conv::conv_message* cmsg = new harmony::conv::conv_message(current_channel,
+        harmony::conv::conv_message* msg = new harmony::conv::conv_message(current_channel,
             harmony::conv::my_username(),
-            msg.dump());
-        harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::SEND_PLAINTEXT, cmsg));
+            msge.dump());
+        harmony::event_queue(std::make_unique<harmony::Event>(harmony::EventType::SEND_PLAINTEXT, msg));
     }
 
     ui->MessageInput->clear();
@@ -316,6 +317,6 @@ void MainWindow::on_actionSet_Username_triggered()
     QString text = QInputDialog::getText(this, tr("QInputDialog::getText()"), tr("Set Username: "), QLineEdit::Normal, "nothings probably actually better", &ok);
     if (ok && !text.isEmpty())
     {
-		usrname_map[ui->ConvList->currentItem().text().toUtf8().constData()] = std::string(text.toUtf8().constData());
+        usrname_map[ui->ConvList->currentItem()->text().toUtf8().constData()] = std::string(text.toUtf8().constData());
     }
 }

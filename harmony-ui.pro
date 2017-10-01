@@ -37,7 +37,8 @@ HEADERS += \
     event.h \
     harmony-ui/conversationinviteaccept.h \
     harmony-ui/sendinvite.h \
-    harmony-ui/leaveconfirmation.h
+    harmony-ui/leaveconfirmation.h \
+    include/json/json.hpp
 
 FORMS += \
         harmony-ui/mainwindow.ui \

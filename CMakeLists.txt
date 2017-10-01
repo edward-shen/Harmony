@@ -38,6 +38,7 @@ file(GLOB harmony_SRC
     "${CMAKE_SOURCE_DIR}/*.cpp"
     "${CMAKE_SOURCE_DIR}/include/np1sec/src/*.h"
     "${CMAKE_SOURCE_DIR}/include/np1sec/src/*.cc"
+    "${CMAKE_SOURCE_DIR}/include/json/*.hpp"
 )
 
 set(SOURCES ${harmony_SRC})
