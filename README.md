@@ -7,7 +7,7 @@
 Harmony is a end-to-end encrypted group messaging based on the [(n+1)sec protocol][n+1 link]. It offers distrubuted communications that is both deniable and is forward-secret.
 
 ### Information
-Harmony was built by a team of 5 during Husky Hacks 3, a 36-hour hackathon at Northeastern Univeristy. The team consisted of Erik Uhlmann, Edward Shen, JJ Bernhardt, Elijah Steres, and Cameron Kennedy. It utilizes the [Spread Toolkit (v4.4.0)][s-tk] for managing the network, and the (n+1)sec protocol to manage our encrypted messages.
+Harmony was built by a team of 5 during Husky Hacks 3, a 36-hour hackathon at Northeastern Univeristy. The team consisted of [Erik Uhlmann](//github.com/erikuhlmann), [Edward Shen](//github.com/edward-shen), [JJ Bernhardt](//github.com/bernhardtj), [Elijah Steres](//github.com/esSteres), and [Cameron Kennedy](//github.com/m3rc1fulcameron). It utilizes the [Spread Toolkit (v4.4.0)][s-tk] for managing the network, and the (n+1)sec protocol to manage our encrypted messages.
 
 Harmony is the code that interfaces the Spread ToolKit with [the reference implementation of (n+1)sec][n+1 implement] and packages it into a nice user interface made in Qt5.
 
